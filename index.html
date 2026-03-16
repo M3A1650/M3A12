@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cosmo Pro | الدليل الاحترافي</title>
+<title>Cosmo Pro | محمد أنيس</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -53,28 +53,52 @@ body {
 }
 
 .sidebar-logo {
-  padding: 28px 20px 16px;
+  padding: 24px 16px 18px;
   text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  background: linear-gradient(180deg, rgba(232,68,106,0.08) 0%, transparent 100%);
 }
 
-.sidebar-logo .logo-icon {
-  font-size: 2.5rem;
-  margin-bottom: 6px;
+.sidebar-logo .logo-img-wrap {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  border: 2px solid rgba(212,168,67,0.5);
+  overflow: hidden;
+  box-shadow: 0 0 0 4px rgba(232,68,106,0.15), 0 4px 16px rgba(0,0,0,0.3);
+  /* recolor overlay: blend the teal/blue logo into rose palette */
+  position: relative;
+}
+
+.sidebar-logo .logo-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* shift hue from teal-blue toward rose — hue-rotate 160deg brings cyan→rose */
+  filter: hue-rotate(155deg) saturate(1.4) brightness(1.1);
+  display: block;
 }
 
 .sidebar-logo h1 {
-  font-size: 1.35rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: var(--gold-light);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.sidebar-logo .owner-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--rose-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
 }
 
 .sidebar-logo p {
-  font-size: 0.72rem;
-  color: var(--rose-light);
-  margin-top: 3px;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
   font-weight: 300;
 }
 
@@ -739,6 +763,68 @@ body {
 .kfaq-q.open { background: #fde8ee; color: var(--rose-dark); }
 .kfaq-a { display: none; padding: 12px 16px; font-size: 0.84rem; line-height: 1.7; background: #faf5f8; border-top: 1px solid var(--border); }
 .kfaq-a.open { display: block; animation: fadeIn 0.25s ease; }
+
+/* ===== PRODUCT CARDS ===== */
+.prod-filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.prod-filter-btn {
+  padding: 7px 16px;
+  border-radius: 30px;
+  border: 2px solid var(--border);
+  background: white;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+.prod-filter-btn.active { background: var(--rose); color: white; border-color: var(--rose); }
+.prod-filter-btn:hover:not(.active) { border-color: var(--rose-light); }
+
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+
+.prod-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  border-top: 3px solid var(--rose);
+  transition: var(--transition);
+  position: relative;
+}
+.prod-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.prod-card .prod-name { font-size: 0.92rem; font-weight: 800; color: var(--dark); margin-bottom: 6px; line-height: 1.4; }
+.prod-card .prod-type-badge {
+  display: inline-block;
+  background: #fde8ee;
+  color: var(--rose-dark);
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.prod-card .prod-use { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+.prod-card .prod-use strong { color: var(--dark); }
+.prod-card .prod-note { font-size: 0.8rem; color: var(--text); background: #faf7f9; padding: 7px 10px; border-radius: 8px; line-height: 1.5; }
+.prod-card.warning { border-top-color: #e74c3c; }
+.prod-card.warning .prod-type-badge { background: #fde8e8; color: #b01a1a; }
+.prod-card.safe { border-top-color: #27ae60; }
+.prod-card.safe .prod-type-badge { background: #e8f8ee; color: #1a6a3a; }
+.prod-card.gold-border { border-top-color: var(--gold); }
+.prod-card.gold-border .prod-type-badge { background: #fdf3dd; color: #8a6000; }
+
+.prod-section-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin: 20px 0 12px;
+  padding-right: 12px;
+  border-right: 3px solid var(--rose);
+}
+
+.prod-panel { display: none; }
+.prod-panel.active { display: block; animation: fadeIn 0.3s ease; }
 </style>
 </head>
 <body>
@@ -746,8 +832,11 @@ body {
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-icon">✿</div>
+    <div class="logo-img-wrap">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCACfAJ4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5B/4UP4Vz/qrvP/Xej/hQ/hX/AJ5XX/f+vQ+9FfoP1PD/AMh+dvHYm9/aM88/4UR4VH/LK6/Gc0f8KI8K/wDPG5/7/mvQ6Kf1PD/yC+vYr/n4zz0fAnwqP+WNz/3/ADR/wonwr/zwuf8Av+f8K9CooWDw/wDIg+u4n/n4zz4fAvwqOPIuT/23NH/Ci/Cv/Pvcf9/jXpNnp9zqEnl20DzP6KD/APq/OulsvhzfzANcSR2w/u/eYflxWkMupT1VMzlmNaO9RniP/CjPCv8AzwuP+/xpR8DfCo/5YXH/AH+Ne/jwDpltzc6ieOuWC0p8P+FYwA18hb/r5roWU0t3BGX9qVv52eAf8KN8K/8APvcf9/jQPgd4V/597j/v+a9+PhXw5dcQ6goJ/uzhjUU3w3SRM2l/uPbeMj9KTyqmtoRYf2pW6zZ4N/wo7wp/z7T/APf40o+B3hQf8us5/wC2xr1vUfBeq6cGdoPOjHV4Tu/TrWGVKk5GD3zXPLAUYP3qdjaOPry2qM4D/hSHhT/n0m/7/GlHwQ8Kj/l0m/7/ABrvaKhYSh/Kh/XcR/Ozgv8AhSPhX/n0l/7/ABo/4Uh4U/59Jf8Av8a72in9UofyoPrmI/nZwY+CPhQf8ukv/f40v/Ck/Cn/AD5y/wDf413dFH1Wh/Ih/XMR/Ow70Ud6K6kcj3CiirulaRcazeLb26kk8seyj1P+FVGLk7IhtJXZXtraa7mWKGNpZG4CqOa7TTfA9rp0Iu9ZnRQOTGTgD2J7mrzy6b4BstkYFxfuOf7ze/sPauH1bWrrWJzJcSbhn5UH3VHtXby06Gs9ZdjmvOr8Oi7nWXnj2106MwaRajYOA7DaPyrmb7xPqWoFjJdOoP8AAh2j9KyqKwlXqT62NY0ox2HOzOcsST7nNN6DoKKKwd3uzVK2wuSMHrUsF5cWrboZnib1VsVDRQpNA0jpdN8e6lYlRKVuUHZx8351vJeaB4wHlzILW8boTgNn2bvXnlKCVII7HNdMMRNK09TnlRi9Yux0PiDwZeaMGljBubYfxp1X6iue611fhvxvJYbba/Hn2p43nlk+vqKueJvCEV3bnUdJ2yRsNzRJ0PuP8K0lShUXNS+4SqSg+WocPRQeCQetFcPqdXoFFFFAg70Ud6P5UlsU9yeytJb+5jggXfI5wP8AGu+ubi18A6QsEIEl/KM59/X6DNQeENPi0HR5dZvFG9x8gPZewH1/pXGarqcur3sl1MxLOeB2UdgK9BWw8L/af4I4/wCLNroiG6uZLud5pnMkrHLMT1qKiiuFtt3Z0pJaBRRRSGFFFFABRRRQAUUUUxi/St7wt4pk0S4EcxaSyc4dTyV9xWBR/nFXTnKm7xIlFTWp2fjPw6hi/teww9u43SKvQZ7j2rjSMHFdn4E1xZN+k3Z3Qyg+Vv8A1WsDxLoraHqkkGP3R+aP/d9K6a0VJe1jt+phTk4v2cvkZVFFFcR0h3rR0DTDq+rQW38LHLn0Ucn+VZ3r9P613Hw4slVL3UJPuoPKU+3Un9B+db0Ic80mRWlyxbQz4h6oFkg0uE7I4wGdV6Z7CuKq3qt6+o6jcXLnJkcn6eg/LFVKK0/aVG/6sKnHkikFLipLaD7RME3bc98VJd2LWgzu3j1xWXK9zKWJpQqKk5avoVqKXFPhhMz7c4Hc0tzac1Ti5SdkiOip7i1NsuS24elb1n4La6gil+1BA67sbM4/WmotnDUzHC0qaqzn7r6nNjn8a6XwloVnrCyefHKWTrg4U8//AFqtx/Dsu4DXwK9x5fb86n8Q6vD4etF03TsJMANzg5210UoqL5prQ8HGZlHHR+rZfK831XReZn+NdPtNNa2htYliOCSR36Vy+c1oatrEmsPA8y/PGgUkfxYrbtvh/PcafHcG6VGdN3l7D9cVM17WbcFoehh6scqwtOGNn7z0v3ZylFKylWIYYYcEe+aSsNtGe8rPXp0HwzNbzRyISrowYEeorvfEkaeJfCsGoxD99CN5GOcfxCuA/wAiu5+Hl2Lq1vtNkOUI3qD6Hgj+VdmHak3TezOesrJT7HC4xRU99amyvZ4SMFHI5+tQVyOLi2mdCd1cXODn/PWu/wBLI0z4ezSqcPIGOfcnaK8/PX/PrXfX5Efw3gx3C/8AoVdeF05peTMcR0XmcCOB6+9FLSVxeZuixYsFuBn0rQnlWYlD3rLhbbIDUtw5DI2cda0UrKx8xjcP9YxlouzUdCGSMxuRirkG23i5HzGmJGZwGC7u+agkkMkoA6A8VmpWY5yr46CoSVuX4vMnvm3qPrUun3mozzJb29xMC3AAbgCq0yts5HepdK1STSbkTxKjtgrhxkYNCep0YWk/qVlFOWtkzu768m8O6GAglu7jH32ycHuc151LK88jySMWdjlmJ6mu10Lxu13exW13BGiSHYHjHGe2QapePNCh025iubdBGk+Q0Y7N6/rXRN865k9EeLlEngMS8Liadqk9brr/AMMY/hzTDq+s29sB8pbLn0Ucn/PvXolzrkdvr9rpmABLHksOzdh+mKzPhnpQS1uL9xkyfInHYdcVjanoWuXOtS332R1fzPMXkcYPA/z61pTk6cU11OfMPZZljalKrO0acbL/ABPqUfGWmf2brMjKMRTfvF/qKwq9G8bae1/oaXPl7J4AHZcc443D9a85+nSs68eWd+j1PoMjxX1rBx5nrH3X8groPAtybbxHbjOFkBjP4j/EVz9aXht/L16wbOMTL/OopO00z3aivBl3xvbi38RXGBgSAP8AmKwK6z4kJt1yI/3oFP6muTq66tUkiaT9xB/n9a724HnfDeM9duP0auD7+2ev4133hzGpeBru2H3o964PX+9WuF3lHyZOI0s/M4Cil579e9JXF5HR1HRoXcAdaluEKJGp6gc5qJHMbBlOCKWWd5iN7bsdKnW5zex/fKt5WHR3EkUbojYVutFpbm6uY4gdpY7c+lOs7OS+l2RgZAySewq+R/YS5+/eMOGI4Qev1q0l1MqteMH7Km/fZZ1fw5FpkUMhuGaIuFfI5HuK05fBdvqNpHNpk+TjBDnIY+p9Kx7LxA0xNvqf+lWkgw2Rgp/tD6UXcN74bmWS0uXNs/McqnIYe46ZrRKJ8+4Y73aUqvLUW2mkl/wDe8P+ArmG/huLxkWOJg4RedxFN8e6gmp6jaadasJJI3wSvI3E4xWDc+KtXvY/Ie8cqTjaihSfbgCtqytbfwXarqN6qz6zICbe1JyIz/ebNU5xtaJEMHiY4iOKxk1KolaKS01Oo1y//wCEF8N2kMCI1xgRqG+6T/ETXIv8SdTfP7i1GeeEb/GsTWfEF9r8qPfTmcoMJ8oUAde1Z1T7SXQ6sLkeHVNvF01Obu2z0vwz4hPiW2u4btIxIOCqDAKmvPtUsW06/nt2GCjED6dqSw1K50ubzbWUxSEbSQAePxov9Qn1O4M9y/mSkYLbQCfypzqc8Vfc1wOWPAYupKlpTklp2ZWrS8Nx+br9gv8A02Ws2ui8B2hufEUT4ysSNIfywP1NFJXmke7UdoMtfEhw2twj+7AB+prk63fG1yLnxHdEHITCD8B/jmsKqru9RipK0EGMnHrXY/DjUBHe3Nm5ys67wD/eH/1ia47vVrTL99Mv4LlDhomDfh3H5VNGfs5qRdWPPFom1/TzpmsXVuRgK5KH1U8j+dZ9d14609NRsbXWLYZBUByO6np+XNcLTrw5ajt1Ipy5olixhSe4VJDhCOg71cu4LOzYZR2cj7gbp9azBQSSeeT65rE56lCdSqpKb5baouxarJat+5SNF9AOT+NQXl5JezGSUjPQADoKgoov0NYYejTlzxjrsFbnhy/3zJptynnWk7BdhPKN2INYdOR2jdWRirqcgjt70XsFegq0OVrVbM9CvPC1n4EtG1TJvpVISKORQFRznk+uK4K9vp9RupLi5kMsznLMf6e1WtT8QahrKRJeXT3CRn5VPArOo3OfCYedNc1eXNN9QooopHoBRRRQMD39hmu88BWy6bpl/qcg4wVXPYLyf6VxNpayXt1HbxrueRtoFdz4wuE0Hw/baTAdryABsf3R1P4mu3DpRvVfQ5azvaHc4a6nN1cyzEkl3LZPvzUNHHbpRXG3d3Z07aB3o60d6KSKe523gXV47u3l0a7IeOQHyg/f1Wud8Q6JJoeovCw3RMd0T/3l/wAazo5XgkWRGKupDAjqK9Esrm18d6O1rchUvoh17g/3h7V3warw9m91scUr0pcy2Z5xRVzVNLuNIu3guUKuOQezD1FU64XFxbTOpNNXQUUUUhhRRRQAUUUUAFFFFABS9OenbNA45rrPCHhQ3jC+vl2WafMFbjf9fQVrTg6kuVETkoK7L/g3Rk0eyk1m/AUbf3YPYev1PFcjrWqyazqM11IT8x+UdgOwrZ8ZeJxq0v2S2O2zjPVeN59fpXMnk+p9a3rTSXs4bL8zKnF/HLd/kJRRRXGdAd6KO9FCKe4VNaXctjcJNBIY5UOQymoaKadtUS0noz0Sx1XTvG1mtpfKsN4OQRwc+o/wrl9e8J3uiSM2wzW2ciWP+o7ViAlSCCQQcgg11uh+Pp7OMW98v2qEcb/4gPcd67VUhWSjVdmupyuMqesNUcjkH60V6FJoWheKR5tjOtvOw5RTjn3X/CsK/wDAGqWrN5SrcoO6EA/lUTw046x1XcuNaL30Oaoq5Po99a8S2c8eO5iIH51VZGU4IIPoRXO4SW6NlJNbjaKkjtpZjhInf2VSa0bTwtqt4RssJVB/ikG0frQoSeyE5RW7MrpUkFvLczLFEjPI3RVGSa7Gw+HTqvmahdLDGOWVD0+pNXH8QaJ4XiMWmwrcTdCy4P5tXTHDNa1XZGLrdI7lfQ/BUVhD9u1llSNPm8pj8oP+16/Ss7xT4wbU1+yWWYbIcccF/wDAVk6z4gvNblLXEn7v+GNeFA+lZtE6yS5KSsu/cI023zTDv6+9FFFcnmdAUUUUgDvRR3ooRT3CiiigkKKKKAHI7RsGUlWHQjtWxY+MNVsMBblpUH8MvzVi0VcZyhtKwnBS3R2lt8S51XE9pG/uhIq0PiZAR8+nuT7OP8K4Git1iancxdCDeh3j/E1QP3dgR7GQf4Vm3XxE1GYEQpFAD3C5P51ytFDxNV6cwKhTXQuX2r3mpN/pNzJKP7pY4/Cqf45oorncnLVmyjy7IKKKKkYUUUUAFFFFAH//2Q==" alt="M3A Logo">
+    </div>
     <h1>Cosmo Pro</h1>
+    <div class="owner-name">محمد أنيس</div>
     <p>الدليل الاحترافي الشامل</p>
   </div>
 
@@ -811,13 +900,48 @@ body {
   <div class="nav-item" onclick="showSection('lifestyle')">
     <span class="icon">🌱</span> نمط الحياة
   </div>
+
+  <div class="nav-section-title">ترشيحات المنتجات</div>
+  <div class="nav-item" onclick="showSection('routines')">
+    <span class="icon">⭐</span> روتين كامل لكل بشرة
+  </div>
+  <div class="nav-item" onclick="showSection('prod_cleansers')">
+    <span class="icon">🧴</span> غسولات البشرة
+  </div>
+  <div class="nav-item" onclick="showSection('prod_toners')">
+    <span class="icon">💦</span> التونر
+  </div>
+  <div class="nav-item" onclick="showSection('prod_moisturizers')">
+    <span class="icon">🫧</span> المرطبات
+  </div>
+  <div class="nav-item" onclick="showSection('prod_sunscreen')">
+    <span class="icon">☀️</span> واقيات الشمس
+  </div>
+  <div class="nav-item" onclick="showSection('prod_acne')">
+    <span class="icon">💊</span> علاج الحبوب
+  </div>
+  <div class="nav-item" onclick="showSection('prod_whitening')">
+    <span class="icon">🌸</span> التفتيح
+  </div>
+  <div class="nav-item" onclick="showSection('prod_eye')">
+    <span class="icon">👁️</span> محيط العين
+  </div>
+  <div class="nav-item" onclick="showSection('prod_wrinkles')">
+    <span class="icon">〰️</span> التجاعيد
+  </div>
+  <div class="nav-item" onclick="showSection('prod_hair')">
+    <span class="icon">💇</span> منتجات الشعر
+  </div>
+  <div class="nav-item" onclick="showSection('prod_special')">
+    <span class="icon">✨</span> منتجات خاصة
+  </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <span class="topbar-title" id="topbarTitle">لوحة التحكم</span>
-    <span class="topbar-badge">Professional Cosmo Program</span>
+    <span class="topbar-badge">محمد أنيس — Cosmo Pro</span>
   </div>
 
   <!-- ===== DASHBOARD ===== -->
@@ -2281,6 +2405,229 @@ body {
 
 </div><!-- end main -->
 
+<!-- ===== PRODUCT SECTIONS ===== -->
+<script>
+// Product data extracted from PDF
+const products = {
+
+  cleansers: {
+    oily: [
+      { name: "Effaclar Gel — La Roche-Posay", type: "جل", use: "دهنية / مختلطة", note: "للبشرة شديدة الدهنية بشكل خاص، يحتوي Zinc Pidolate لتنظيم الدهون" },
+      { name: "Pure Finess Gel — Vichy", type: "جل", use: "دهنية / مختلطة", note: "ينظف بعمق ويقلل المسام" },
+      { name: "Sebium Gel — Bioderma", type: "جل", use: "دهنية / مختلطة", note: "يحتوي Fluidactiv لتنظيم الإفرازات الدهنية" },
+      { name: "Normaderm Gel — Vichy", type: "جل", use: "دهنية مع حبوب", note: "يحتوي Salicylic Acid 2% لمكافحة الحبوب" },
+      { name: "Clean Activ — Neutrogena", type: "جل / رغوي", use: "دهنية", note: "مناسب للاستخدام اليومي" },
+      { name: "صابون Sebamed — للبشرة الدهنية", type: "صابون", use: "دهنية", note: "pH 5.5 مناسب لبشرة الوجه" },
+    ],
+    dry: [
+      { name: "Toleriane Hydrating Gentle — La Roche-Posay", type: "كريمي", use: "جافة / حساسة", note: "Gentle Cleansing — خالٍ من الصابون والعطور" },
+      { name: "Cicaplast — La Roche-Posay", type: "ميلكي", use: "جافة شديدة / حساسة جداً", note: "مغذي ومرطب أثناء التنظيف" },
+      { name: "Atoderm — Bioderma", type: "كريمي ميلكي", use: "جافة جداً", note: "للبشرة الجافة جداً" },
+      { name: "Lait Demaquillant — Embryolisse", type: "حليبي ميلكي", use: "جافة / عادية", note: "مرطب وخفيف على البشرة" },
+      { name: "Cetaphil Gentle Cleanser", type: "ميلكي / لوشن", use: "جافة / حساسة / عادية", note: "Soap-Free — مناسب لجميع البشرة الحساسة" },
+    ],
+    sensitive: [
+      { name: "Sensibio Gel — Bioderma", type: "ميسيلار جل", use: "حساسة", note: "مخصص للبشرة التفاعلية" },
+      { name: "Toleriane Dermo-Cleanser — La Roche-Posay", type: "لوشن", use: "حساسة / جافة", note: "Fragrance Free — Hypoallergenic" },
+      { name: "Sebamed Sensitive Face Cleanser", type: "جل ناعم", use: "حساسة", note: "pH 5.5 — مناسب للبشرة الحساسة جداً" },
+    ],
+    micellar: [
+      { name: "Micellar Water Oily — Bioderma Sebium H2O", type: "ميسيلار ووتر", use: "دهنية / مختلطة", note: "يزيل الدهون الزائدة بدون ماء" },
+      { name: "Micellar Water — Sensibio H2O Bioderma", type: "ميسيلار ووتر", use: "حساسة / جافة", note: "الأكثر مبيعاً في العالم — حساسة جداً" },
+      { name: "Micellar Water — Vichy Purete Thermale", type: "ميسيلار ووتر", use: "جميع الأنواع", note: "يزيل المكياج بالكامل" },
+      { name: "Make-Up Remover Milk — Dry Skin", type: "حليبي ميلكي", use: "جافة", note: "يفضل القوام الميلكي أو الزيتي للبشرة الجافة" },
+    ]
+  },
+
+  toners: [
+    { name: "Serozinc — La Roche-Posay", type: "تونر زنك", use: "دهنية / حبوب", note: "يحتوي Zinc لتضييق المسام وتقليل اللمعة" },
+    { name: "Effaclar Toning Lotion — La Roche-Posay", type: "تونر", use: "دهنية / مختلطة", note: "يقلل المسام ويزيل بقايا الشوائب" },
+    { name: "Normaderm Toner — Vichy", type: "تونر", use: "دهنية", note: "يضبط الإفرازات الدهنية" },
+    { name: "Floral Toner — Uriage", type: "تونر مياه حرارية", use: "جميع الأنواع حتى الحساسة", note: "مهدئ ومنعش" },
+    { name: "ماء الورد — تونر طبيعي", type: "تونر طبيعي", use: "جميع الأنواع", note: "سعره مناسب ومناسب لجميع أنواع البشرة" },
+    { name: "Pore Refining Toner — Whitening", type: "تونر مفتح", use: "جميع الأنواع", note: "يحتوي على مكونات مفتحة للبشرة" },
+  ],
+
+  moisturizers: {
+    dry: [
+      { name: "Effaclar H — La Roche-Posay", type: "كريم ثقيل", use: "جافة / متضررة من Isotretinoin", note: "ترطيب مكثف لإعادة بناء الحاجز الجلدي" },
+      { name: "Hydraphase Intense — La Roche-Posay", type: "كريم Rich", use: "جافة", note: "يحتوي Hyaluronic Acid — ترطيب لـ 48 ساعة" },
+      { name: "Aqualia Thermal Rich — Vichy", type: "كريم Rich", use: "جافة", note: "من أفضل المرطبات للبشرة الجافة — Hydrating" },
+      { name: "Sensibio Rich — Bioderma", type: "كريم ثقيل", use: "جافة / حساسة", note: "مغذٍ ومهدئ" },
+      { name: "Urea 3% Cream", type: "كريم بيوريا", use: "جافة جداً", note: "Urea يرطب ويعالج الجفاف الشديد" },
+      { name: "Cicaplast Baume B5 — La Roche-Posay", type: "بلسم مكثف", use: "جافة / متهيجة", note: "يعيد بناء الطبقة الجلدية الخارجية" },
+    ],
+    oily: [
+      { name: "Effaclar Mat — La Roche-Posay", type: "فلويد Mattifying", use: "دهنية", note: "يمتص الدهون ويقضي على اللمعة" },
+      { name: "Normaderm Phytosolution — Vichy", type: "كريم خفيف", use: "دهنية مع حبوب", note: "يرطب ويعالج الحبوب في نفس الوقت" },
+      { name: "Sebium Hydra — Bioderma", type: "كريم جل خفيف", use: "دهنية", note: "Hydrating — بدون زيوت" },
+      { name: "Aqualia Thermal — Vichy", type: "جل خفيف", use: "دهنية / مختلطة", note: "Hydrating بدون دهون" },
+    ],
+    normal: [
+      { name: "Hydraphase — La Roche-Posay", type: "كريم", use: "عادية / مختلطة", note: "يومي للترطيب" },
+      { name: "Aqualia Thermal — Vichy", type: "كريم جل", use: "عادية / مختلطة", note: "قوام خفيف مناسب للاستخدام اليومي" },
+    ]
+  },
+
+  sunscreens: {
+    oily: [
+      { name: "Anthelios Fluid — La Roche-Posay", type: "فلويد SPF50+", use: "دهنية", note: "Ultra-light — يجف سريعاً ولا يترك أثراً" },
+      { name: "Anthelios Gel — La Roche-Posay", type: "جل SPF50+", use: "دهنية مع حبوب", note: "Non-comedogenic — Anti-shine" },
+      { name: "Capital Soleil Dry Touch — Vichy", type: "فلويد SPF50", use: "دهنية", note: "Dry Touch — Mattifying" },
+      { name: "Photoderm AKN — Bioderma", type: "فلويد SPF30", use: "دهنية مع حبوب", note: "مخصص للبشرة الدهنية المعرضة للحبوب" },
+      { name: "Gel Crème Anti-brilliance — Vichy SPF50", type: "جل كريم", use: "دهنية / مختلطة", note: "يوحد اللون ويمتص الدهون" },
+    ],
+    dry: [
+      { name: "Anthelios Cream — La Roche-Posay", type: "كريم SPF50+", use: "جافة / عادية", note: "Ultra-comfort — مرطب" },
+      { name: "Capital Soleil Cream — Vichy", type: "كريم SPF50", use: "جافة / عادية", note: "مع مرطبات" },
+    ],
+    sensitive: [
+      { name: "Anthelios — La Roche-Posay Sensitive", type: "كريم SPF50+", use: "حساسة", note: "Fragrance Free — للبشرة الحساسة جداً" },
+      { name: "Photoderm Mineral — Bioderma", type: "كريم SPF50+ معدني", use: "حساسة / أطفال", note: "فلتر معدني فقط — آمن جداً" },
+    ],
+    tinted: [
+      { name: "Anthelios Tinted — La Roche-Posay", type: "تينتد لوشن SPF50+", use: "جميع الأنواع", note: "يغني عن كريم الأساس مع حماية كاملة" },
+      { name: "Capital Soleil Tinted Cream", type: "تينتد كريم SPF50", use: "جافة / عادية", note: "درجات متعددة" },
+      { name: "Tinted Fluid — Vichy", type: "تينتد فلويد SPF50", use: "دهنية / مختلطة", note: "خفيف ومناسب للبشرة الدهنية" },
+      { name: "BB Cream Vichy", type: "بي بي SPF15-30", use: "جميع الأنواع", note: "كريم ملون مع ترطيب وحماية خفيفة" },
+    ],
+    eye: [
+      { name: "Bionike Eye Stick SPF50+", type: "ستيك للعين", use: "منطقة العين", note: "المنتج الوحيد المناسب للعين بواقي شمس" },
+    ]
+  },
+
+  acne: [
+    { name: "Effaclar Duo+ — La Roche-Posay", type: "كريم علاجي", use: "رؤوس بيضاء وسوداء وحبوب ملتهبة", note: "يعالج حب الشباب ويمنع ظهور البقع الداكنة" },
+    { name: "Effaclar K+ — La Roche-Posay", type: "كريم علاجي", use: "حب الكبار — رؤوس متكررة", note: "امتصاص كامل للإفراز الدهني لـ 8 ساعات" },
+    { name: "Effaclar H — La Roche-Posay", type: "كريم مرطب", use: "جلد متضرر من Isotretinoin", note: "لإعادة بناء البشرة المتضررة من علاج حب الشباب الشديد" },
+    { name: "Aknimycin Cream", type: "كريم مضاد حيوي", use: "حبوب بسيطة", note: "مضاد حيوي موضعي — Erythromycin" },
+    { name: "Fucidin Cream", type: "كريم مضاد حيوي", use: "حبوب بسيطة / ملتهبة", note: "Fucidic Acid — فعال ضد البكتيريا" },
+    { name: "Fucicort Cream", type: "كريم مضاد حيوي + كورتيزون", use: "حبوب بها صديد وملتهبة", note: "⚠️ بحد أقصى 3 أيام فقط — يحتوي كورتيزون" },
+    { name: "Garamycin Cream", type: "كريم مضاد حيوي", use: "حبوب ملتهبة", note: "Gentamicin — فعال ضد الالتهابات" },
+    { name: "Normaderm — Vichy", type: "كريم علاجي", use: "دهنية مع حبوب — استخدام يومي", note: "Salicylic Acid 0.5% للاستخدام اليومي" },
+    { name: "Sebium Kerato+ — Bioderma", type: "جل كريم علاجي", use: "رؤوس سوداء وبيضاء", note: "يقشر لطيفاً ويحل مشكلة انسداد المسام" },
+  ],
+
+  whitening: {
+    face: [
+      { name: "Pigmentclar Serum — La Roche-Posay", type: "سيروم ليلي", use: "بقع غامقة / تفتيح وجه", note: "يحتوي LHA وNiacinamide لتفتيح البقع" },
+      { name: "Pigmentclar Cream Day — La Roche-Posay", type: "كريم نهاري + SPF30", use: "تفتيح وجه نهاراً", note: "تفتيح مع واقي شمس" },
+      { name: "Bi-White Serum — Vichy", type: "سيروم مفتح", use: "بقع غامقة", note: "يحتوي Neohesperidin" },
+      { name: "Hexyl-R Serum — Vichy", type: "سيروم", use: "تفتيح وتوحيد لون", note: "مفتح قوي ليلاً" },
+      { name: "White Activ Serum — Garnier", type: "سيروم", use: "تفتيح", note: "متوسط السعر" },
+    ],
+    spots: [
+      { name: "Pigmentclar Eye Cream — La Roche-Posay", type: "كريم عين مفتح", use: "تفتيح بقع غامقة حول العين", note: "مخصص للبقع حول العين" },
+      { name: "Anti-Brown Spots Treatment", type: "كريم موضعي", use: "بقع ناتجة عن حبوب", note: "⚠️ ينصح بوضعه نصف ساعة ليلاً ثم شطفه" },
+    ],
+    sensitive_area: [
+      { name: "Whitening Serum — Night — للمناطق الحساسة", type: "سيروم ليلي", use: "إبط / بين الفخذين", note: "خالٍ من البارابين والكورتيزون والهيدروكينون" },
+      { name: "Whitening Cream Night — للمناطق الحساسة", type: "كريم ليلي", use: "مناطق حساسة", note: "مخصص ومناسب للمناطق الحساسة" },
+      { name: "Concentrated Night Serum — للمناطق الحساسة", type: "سيروم مركز ليلي", use: "مناطق حساسة", note: "تفتيح مكثف للبقع الشديدة" },
+    ]
+  },
+
+  eye: [
+    { name: "Pigmentclar Eye — La Roche-Posay", type: "كريم عين", use: "هالات سوداء", note: "يحتوي مكونات مفتحة وواقي شمس" },
+    { name: "Redermic C Eyes — La Roche-Posay", type: "كريم عين", use: "هالات + تجاعيد خفيفة", note: "Vit C لتفتيح الهالات وشد الجفون" },
+    { name: "Mineral 89 Eye — Vichy", type: "كريم عين", use: "انتفاخات + هالات", note: "Hyaluronic Acid — مهدئ ومرطب" },
+    { name: "Eye Contour Cream — Anti-puffiness", type: "كريم للانتفاخات", use: "انتفاخات", note: "يحتوي كونسيلر ومكونات مضادة للانتفاخ" },
+    { name: "Lifting Eye Serum — Anti-Wrinkle", type: "سيروم شد", use: "تجاعيد عميقة حول العين", note: "يزيل التجاعيد ويشد الجفون" },
+    { name: "Bionike Eye Stick SPF50+", type: "ستيك واقي شمس", use: "حماية منطقة العين من الشمس", note: "المنتج الوحيد المناسب لمنطقة العين" },
+  ],
+
+  wrinkles: {
+    mild: [
+      { name: "Redermic C — La Roche-Posay", type: "كريم نهاري", use: "خطوط رفيعة + علامات تعبيرية", note: "Vit C + Hyaluronic Acid — لأول ظهور للتجاعيد" },
+      { name: "Redermic R — La Roche-Posay", type: "كريم ليلي Retinol", use: "خطوط رفيعة ليلاً", note: "Retinol 0.1% — يجدد البشرة أثناء النوم" },
+      { name: "Liftactiv H.A. Serum — Vichy", type: "سيروم", use: "خطوط رفيعة + فقدان المرونة", note: "Hyaluronic Acid + Vitamin Cg" },
+      { name: "Neovadiol — Vichy", type: "كريم نهاري", use: "بشرة ناضجة + علامات شيخوخة", note: "مناسب لمرحلة انقطاع الطمث" },
+    ],
+    deep: [
+      { name: "Redermic [R] Retinol — La Roche-Posay", type: "كريم مركز ليلي", use: "تجاعيد عميقة", note: "Retinol — يملأ التجاعيد ويعيد بناء الجلد" },
+      { name: "Liftactiv Collagen Specialist — Vichy", type: "كريم نهاري", use: "تجاعيد عميقة + ترهلات", note: "يحفز إنتاج الكولاجين" },
+      { name: "Resveratrol B3 Serum — Vichy", type: "سيروم ليلي", use: "تجاعيد عميقة", note: "Resveratrol + Vit B3 — مضاد أكسدة قوي" },
+      { name: "قلم فيلر للتجاعيد", type: "قلم فيلر", use: "خطوط التجاعيد العميقة فقط", note: "يستخدم مباشرة على خط التجعد" },
+    ]
+  },
+
+  hair_products: {
+    shampoo: [
+      { name: "Dercos Neogenic Shampoo — Vichy", type: "شامبو", use: "تساقط الشعر — رجال وسيدات", note: "يحتوي Stemoxydine لتحفيز نمو الشعر" },
+      { name: "Dercos Energising Shampoo — Vichy", type: "شامبو", use: "تساقط الشعر للرجال", note: "Aminexil SP94" },
+      { name: "Dercos Dandruff — Vichy", type: "شامبو قشرة", use: "قشرة جافة ودهنية", note: "Selenium DS + Salicylic Acid" },
+      { name: "Dercos Nutritive — Vichy", type: "شامبو مغذٍ", use: "شعر جاف", note: "لترطيب وتغذية الشعر الجاف" },
+      { name: "Dercos Oily — Vichy", type: "شامبو", use: "شعر دهني", note: "ينظف ويوازن إفراز الدهون" },
+      { name: "Nizoral Shampoo 2%", type: "شامبو طبي", use: "قشرة دهنية / فطريات", note: "Ketoconazole — فعال جداً للقشرة الفطرية" },
+      { name: "Selenium Shampoo", type: "شامبو طبي", use: "قشرة دهنية", note: "Selenium Sulphide" },
+      { name: "Shampoo للشعر المعالج بالكيراتين", type: "شامبو", use: "شعر بروتين/كيراتين", note: "خالٍ من السلفات وكلوريد الصوديوم — إلزامي" },
+    ],
+    ampules: [
+      { name: "Dercos Aminexil Ampules — Vichy", type: "أمبولات", use: "تساقط الشعر", note: "أمبول نصف يومياً 6 أسابيع، ثم يوم بعد يوم 6 أسابيع" },
+      { name: "Klorane Ampules — Anti-hairloss", type: "أمبولات", use: "تساقط الشعر", note: "مستخلصات نباتية طبيعية" },
+    ],
+    minoxidil: [
+      { name: "Minoxidil 2%", type: "لوشن/سبراي", use: "صلع وراثي — رجال وسيدات", note: "2.5 مل صباحاً + 2.5 مل مساءً يومياً" },
+      { name: "Minoxidil 5%", type: "لوشن/سبراي", use: "صلع وراثي — رجال فقط", note: "⚠️ للرجال فقط — 5% قد يسبب شعر للسيدات" },
+    ],
+    vitamins_hair: [
+      { name: "Pantogar Capsules", type: "كبسول", use: "تساقط وضعف الشعر", note: "قرص 3 مرات يومياً بعد الأكل" },
+      { name: "Hair Tone Capsules", type: "كبسول", use: "تساقط وضعف الشعر", note: "قرص مرتين يومياً بعد الأكل" },
+      { name: "Nutrition for Hair & Nails", type: "كبسول", use: "تساقط + ضعف الأظافر", note: "قرص مرتين يومياً" },
+      { name: "Biotin Forte", type: "أقراص", use: "تساقط + ضعف الشعر والأظافر", note: "مهم جداً لنمو وتقوية الشعر" },
+      { name: "Ferrotron / Ferroglobin", type: "كبسول حديد", use: "تساقط ناتج عن أنيميا", note: "⚠️ يصاحبه تحاليل دم كاملة + مخزون حديد" },
+    ],
+    keratin: [
+      { name: "Global Keratin — Curly", type: "كيراتين", use: "شعر مجعد", note: "يحتوي 2% فورمالين" },
+      { name: "Global Keratin — Resistant", type: "كيراتين قوي", use: "شعر شديد التجعيد", note: "يحتوي 4% فورمالين" },
+      { name: "Global Keratin — The Best", type: "كيراتين + بروتين", use: "جميع أنواع الشعر", note: "✅ 0% فورمالين — الأفضل والأأمن" },
+      { name: "Unex Protein", type: "بروتين", use: "شعر جاف وتالف", note: "✅ 0% فورمالين" },
+      { name: "Amazon Keratin (Apple/Green Tea/Grape/Collagen)", type: "كيراتين", use: "حسب النوع", note: "متوفر بأنواع متعددة" },
+      { name: "Chi Enviro Smoothing Treatment", type: "بروتين معالج", use: "شعر عادي / مصبوغ", note: "✅ 0% فورمالين" },
+    ]
+  },
+
+  special: {
+    afterSun: [
+      { name: "Anthelios After-Sun Lotion — La Roche-Posay", type: "لوشن", use: "بعد التعرض للشمس", note: "يهدئ ويبرد البشرة المتهيجة" },
+      { name: "Mineral 89 — Vichy", type: "سيروم/لوشن", use: "ترطيب بعد الشمس", note: "Hyaluronic Acid + Minerals" },
+      { name: "Mebo Ointment", type: "مرهم", use: "حروق شمس من الدرجة الأولى/الثانية", note: "يعالج الحروق ويهدئ الألم" },
+    ],
+    cellulite: [
+      { name: "Destock Intensive — Vichy", type: "كريم", use: "سيلوليت + شد", note: "يحتوي Caffeine لإذابة الدهون + شد الجلد" },
+      { name: "Coffeine Solution — The Ordinary", type: "سيروم", use: "سيلوليت", note: "Caffeine عالي التركيز" },
+    ],
+    stretchMarks: [
+      { name: "Bio Oil", type: "زيت", use: "علامات التمدد + ندبات", note: "آمن للاستخدام أثناء الحمل — يشحم البشرة" },
+      { name: "Cicalfate — La Roche-Posay", type: "كريم", use: "ترطيب أثناء الحمل", note: "آمن للحمل — يزيد مرونة الجلد" },
+      { name: "Stretch Mark Cream — Mustela", type: "كريم", use: "علامات التمدد — حوامل", note: "✅ آمن تماماً أثناء الحمل" },
+      { name: "Shea Butter Cream", type: "كريم", use: "ترطيب ومرونة الجلد", note: "Shea + Cocoa Butter — وقاية من التمدد" },
+    ],
+    dermaRoller: [
+      { name: "Derma Roller 0.5mm", type: "ديرما رولر", use: "نضارة — وجه وعنق — خطوط رفيفة", note: "للاستخدام المنزلي — مرة أسبوعياً" },
+      { name: "Derma Roller 1.0mm", type: "ديرما رولر", use: "مسام واسعة — تساقط شعر", note: "كل أسبوع أو أسبوعين" },
+      { name: "Derma Roller 1.5mm", type: "ديرما رولر", use: "حفر + ندبات + علامات تمدد + سيلوليت", note: "كل أسبوعين — يحتاج مخدر موضعي" },
+      { name: "Emla Cream / Pridocain", type: "مخدر موضعي", use: "قبل الديرما رولر", note: "يوضع قبل الاستخدام لتخفيف الألم" },
+    ],
+    footCare: [
+      { name: "تركيبة المعمل — عبد اللطيف الطرشوبي بـ Urea", type: "كريم تشققات", use: "تشققات الكعبين", note: "Urea مقشر للطبقة السميكة المتشققة" },
+      { name: "Driclor Antiperspirant", type: "محلول", use: "رائحة القدم / العرق الزائد", note: "أمونيوم كلوريد — يقلل إفراز العرق" },
+      { name: "بودرة القدمين بالنعناع — تركيبة المعمل", type: "بودرة", use: "رائحة القدم", note: "تمتص العرق والروائح" },
+    ],
+    lipCare: [
+      { name: "Cicaplast Lips — La Roche-Posay", type: "بلسم شفاه SPF15", use: "تشققات الشفاه", note: "مرطب ومعالج للتشققات" },
+      { name: "Nutriexpert Lip Balm — SPF30", type: "بلسم شفاه SPF30", use: "تشققات + حماية من الشمس", note: "حماية وترطيب مكثف" },
+      { name: "Aquaphor — Eucerin", type: "مرهم شفاه", use: "تشققات شديدة", note: "مرطب مكثف وشافٍ" },
+    ],
+    eyeLash: [
+      { name: "Talika Lipocils Serum", type: "سيروم رموش", use: "تغذية وتطويل الرموش", note: "يطول ويقوي الرموش" },
+      { name: "Nourishing Eye Lash Serum", type: "سيروم", use: "تساقط + ضعف الرموش", note: "يغذي ويحمي الرموش" },
+      { name: "Eye Lubricant Drops", type: "قطرات مرطبة للعين", use: "جفاف العين من Isotretinoin", note: "ضروري مع استخدام Isotretinoin" },
+    ]
+  }
+};
+</script>
+
 <script>
 // ===== NAVIGATION =====
 const sectionTitles = {
@@ -2300,7 +2647,18 @@ const sectionTitles = {
   dandruff: 'قشرة الشعر',
   keratin: 'الكيراتين والبروتين',
   vitamins: 'الفيتامينات',
-  lifestyle: 'نمط الحياة'
+  lifestyle: 'نمط الحياة',
+  routines: 'روتين كامل لكل نوع بشرة',
+  prod_cleansers: 'ترشيحات: غسولات البشرة',
+  prod_toners: 'ترشيحات: التونر',
+  prod_moisturizers: 'ترشيحات: المرطبات',
+  prod_sunscreen: 'ترشيحات: واقيات الشمس',
+  prod_acne: 'ترشيحات: علاج الحبوب',
+  prod_whitening: 'ترشيحات: التفتيح',
+  prod_eye: 'ترشيحات: محيط العين',
+  prod_wrinkles: 'ترشيحات: التجاعيد',
+  prod_hair: 'ترشيحات: منتجات الشعر',
+  prod_special: 'ترشيحات: منتجات خاصة',
 };
 
 function showSection(id) {
@@ -2491,7 +2849,104 @@ function toggleKfaq(q) {
   }
 }
 
-// Start animation on stat bars
+// Add to section titles
+sectionTitles['prod_cleansers'] = 'ترشيحات: غسولات البشرة';
+sectionTitles['prod_toners'] = 'ترشيحات: التونر';
+sectionTitles['prod_moisturizers'] = 'ترشيحات: المرطبات';
+sectionTitles['prod_sunscreen'] = 'ترشيحات: واقيات الشمس';
+sectionTitles['prod_acne'] = 'ترشيحات: علاج الحبوب';
+sectionTitles['prod_whitening'] = 'ترشيحات: التفتيح';
+sectionTitles['prod_eye'] = 'ترشيحات: محيط العين';
+sectionTitles['prod_wrinkles'] = 'ترشيحات: التجاعيد';
+sectionTitles['prod_hair'] = 'ترشيحات: منتجات الشعر';
+sectionTitles['prod_special'] = 'ترشيحات: منتجات خاصة';
+
+function makeCard(p, extraClass='') {
+  const warn = p.note && p.note.startsWith('⚠️');
+  const safe = p.note && (p.note.startsWith('✅') || p.note.includes('آمن'));
+  const cls = warn ? 'warning' : safe ? 'safe' : extraClass;
+  return `
+    <div class="prod-card ${cls}">
+      <div class="prod-name">${p.name}</div>
+      <div class="prod-type-badge">${p.type}</div>
+      <div class="prod-use">للاستخدام: <strong>${p.use}</strong></div>
+      <div class="prod-note">${p.note}</div>
+    </div>`;
+}
+
+function makeSection(title, arr, extraClass='') {
+  return `<div class="prod-section-title">${title}</div>
+  <div class="products-grid">${arr.map(p => makeCard(p, extraClass)).join('')}</div>`;
+}
+
+function renderCleansers() {
+  document.getElementById('sec-cleansers-oily').innerHTML = makeSection('🫧 للبشرة الدهنية والمختلطة', products.cleansers.oily);
+  document.getElementById('sec-cleansers-dry').innerHTML = makeSection('🌵 للبشرة الجافة', products.cleansers.dry);
+  document.getElementById('sec-cleansers-sensitive').innerHTML = makeSection('🌸 للبشرة الحساسة', products.cleansers.sensitive);
+  document.getElementById('sec-cleansers-micellar').innerHTML = makeSection('💧 ميسيلار واتر وغسيل جاف', products.cleansers.micellar);
+}
+
+function renderToners() {
+  document.getElementById('sec-toners-all').innerHTML = makeSection('💊 جميع أنواع التونر', products.toners);
+}
+
+function renderMoisturizers() {
+  document.getElementById('sec-moist-dry').innerHTML = makeSection('🌵 للبشرة الجافة', products.moisturizers.dry);
+  document.getElementById('sec-moist-oily').innerHTML = makeSection('💧 للبشرة الدهنية', products.moisturizers.oily);
+  document.getElementById('sec-moist-normal').innerHTML = makeSection('😊 للبشرة العادية والمختلطة', products.moisturizers.normal);
+}
+
+function renderSunscreens() {
+  document.getElementById('sec-sun-oily').innerHTML = makeSection('💧 للبشرة الدهنية', products.sunscreens.oily);
+  document.getElementById('sec-sun-dry').innerHTML = makeSection('🌵 للبشرة الجافة والعادية', products.sunscreens.dry);
+  document.getElementById('sec-sun-sensitive').innerHTML = makeSection('🌸 للبشرة الحساسة', products.sunscreens.sensitive);
+  document.getElementById('sec-sun-tinted').innerHTML = makeSection('🎨 Tinted & BB Cream', products.sunscreens.tinted, 'gold-border');
+  document.getElementById('sec-sun-eye').innerHTML = makeSection('👁️ واقي شمس للعين', products.sunscreens.eye);
+}
+
+function renderAcne() {
+  document.getElementById('sec-acne-all').innerHTML = makeSection('💊 جميع منتجات الحبوب', products.acne);
+}
+
+function renderWhitening() {
+  document.getElementById('sec-white-face').innerHTML = makeSection('🌸 تفتيح الوجه', products.whitening.face);
+  document.getElementById('sec-white-spots').innerHTML = makeSection('⚫ تفتيح البقع الداكنة', products.whitening.spots);
+  document.getElementById('sec-white-sensitive').innerHTML = makeSection('💜 تفتيح المناطق الحساسة', products.whitening.sensitive_area);
+}
+
+function renderEye() {
+  document.getElementById('sec-eye-all').innerHTML = makeSection('👁️ جميع منتجات محيط العين', products.eye);
+}
+
+function renderWrinkles() {
+  document.getElementById('sec-wrinkle-mild').innerHTML = makeSection('〰️ خطوط رفيفة وتعبيرية', products.wrinkles.mild);
+  document.getElementById('sec-wrinkle-deep').innerHTML = makeSection('🔴 تجاعيد عميقة', products.wrinkles.deep);
+}
+
+function renderHair() {
+  document.getElementById('sec-hair-shampoo').innerHTML = makeSection('🧴 شامبوهات', products.hair_products.shampoo);
+  document.getElementById('sec-hair-ampules').innerHTML = makeSection('💉 أمبولات التساقط', products.hair_products.ampules);
+  document.getElementById('sec-hair-minoxidil').innerHTML = makeSection('💊 Minoxidil', products.hair_products.minoxidil, 'warning');
+  document.getElementById('sec-hair-vitamins').innerHTML = makeSection('🌿 فيتامينات الشعر', products.hair_products.vitamins_hair);
+  document.getElementById('sec-hair-keratin').innerHTML = makeSection('💎 الكيراتين والبروتين', products.hair_products.keratin);
+}
+
+function renderSpecial() {
+  document.getElementById('sec-sp-aftersun').innerHTML = makeSection('☀️ بعد الشمس وحروق الشمس', products.special.afterSun);
+  document.getElementById('sec-sp-cellulite').innerHTML = makeSection('🍊 السيلوليت', products.special.cellulite);
+  document.getElementById('sec-sp-stretch').innerHTML = makeSection('📏 علامات التمدد', products.special.stretchMarks, 'safe');
+  document.getElementById('sec-sp-derma').innerHTML = makeSection('🔬 الديرما رولر', products.special.dermaRoller);
+  document.getElementById('sec-sp-foot').innerHTML = makeSection('👣 العناية بالقدمين', products.special.footCare);
+  document.getElementById('sec-sp-lip').innerHTML = makeSection('💋 العناية بالشفاه', products.special.lipCare);
+  document.getElementById('sec-sp-lash').innerHTML = makeSection('✨ العناية بالرموش', products.special.eyeLash);
+}
+
+// Render all on load
+window.addEventListener('DOMContentLoaded', () => {
+  renderCleansers(); renderToners(); renderMoisturizers();
+  renderSunscreens(); renderAcne(); renderWhitening();
+  renderEye(); renderWrinkles(); renderHair(); renderSpecial();
+});
 setTimeout(() => {
   document.querySelectorAll('.bar-fill').forEach(b => {
     const w = b.style.width;
@@ -2499,6 +2954,360 @@ setTimeout(() => {
     setTimeout(() => { b.style.width = w; }, 100);
   });
 }, 300);
+
+// ===== ROUTINES =====
+sectionTitles['routines'] = 'روتين كامل لكل نوع بشرة';
+
+const routines = {
+  oily: {
+    label: "💧 البشرة الدهنية", color: "#4a90d9",
+    morning: [
+      { step:"1", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Effaclar Gel Moussant", desc:"جل مُنظّف للبشرة الدهنية والمعرضة للحبوب" },
+        { brand:"Vichy", name:"Normaderm Phytosolution Gel", desc:"جل مزدوج يُنظّف ويُقلّل الحبوب" },
+        { brand:"Bioderma", name:"Sebium Gel Moussant", desc:"جل مُنظّف يُنظّم الدهون الزائدة" },
+      ]},
+      { step:"2", icon:"💊", title:"تونر", products:[
+        { brand:"La Roche-Posay", name:"Serozinc Toner", desc:"يُضيّق المسام ويُقلّل اللمعة بالزنك" },
+        { brand:"Vichy", name:"Normaderm Purifying Toner", desc:"يُنظّم الإفرازات ويُحسّن مظهر المسام" },
+      ]},
+      { step:"3", icon:"💧", title:"مرطب خفيف", products:[
+        { brand:"La Roche-Posay", name:"Effaclar Mat", desc:"Mattifying فلويد يُزيل اللمعة لـ 8 ساعات" },
+        { brand:"Vichy", name:"Normaderm Beautifying Anti-Blemish", desc:"مرطب يُعالج الحبوب ويُرطّب في نفس الوقت" },
+        { brand:"Bioderma", name:"Sebium Hydra", desc:"مرطب خفيف جداً مخصص للبشرة الدهنية" },
+      ]},
+      { step:"4", icon:"☀️", title:"واقي شمس", products:[
+        { brand:"La Roche-Posay", name:"Anthelios Anti-Shine Fluid SPF50+", desc:"واقي جل خفيف Anti-shine — لا يُسبّب حبوباً" },
+        { brand:"Vichy", name:"Capital Soleil Dry Touch SPF50", desc:"واقي جاف لا يُترك أثراً أبيض" },
+        { brand:"Bioderma", name:"Photoderm AKN Mat SPF30", desc:"مخصص للبشرة الدهنية المعرضة للحبوب" },
+      ]},
+    ],
+    evening: [
+      { step:"1", icon:"💧", title:"إزالة مكياج — ميسيلار", products:[
+        { brand:"Bioderma", name:"Sebium H2O Micellar Water", desc:"ميسيلار للبشرة الدهنية — يُزيل الدهون والمكياج" },
+        { brand:"La Roche-Posay", name:"Effaclar Micellar Water Oily Skin", desc:"يُنظّف عمقياً دون جفاف" },
+      ]},
+      { step:"2", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Effaclar Gel Moussant", desc:"نفس غسول الصباح" },
+      ]},
+      { step:"3", icon:"🎯", title:"علاج الحبوب (عند الحاجة)", products:[
+        { brand:"La Roche-Posay", name:"Effaclar Duo+", desc:"يُعالج الرؤوس البيضاء والسوداء والملتهبة" },
+        { brand:"La Roche-Posay", name:"Effaclar K+", desc:"لحب الكبار — يمتص الدهون لـ 8 ساعات" },
+      ]},
+      { step:"4", icon:"🌙", title:"مرطب ليلي", products:[
+        { brand:"Vichy", name:"Normaderm Night Cream", desc:"يُرطّب ويُعالج الحبوب ليلاً" },
+        { brand:"Bioderma", name:"Sebium Global", desc:"كريم ليلي متكامل للبشرة الدهنية" },
+      ]},
+    ],
+    weekly: [
+      { brand:"Vichy", name:"Normaderm Scrub", desc:"تقشير أسبوعي لإزالة الخلايا الميتة وتقليل المسام" },
+      { brand:"La Roche-Posay", name:"Effaclar Mask", desc:"ماسك طيني يُنظّف المسام ويُقلّل اللمعة" },
+    ]
+  },
+  dry: {
+    label: "🌵 البشرة الجافة", color: "#e07a30",
+    morning: [
+      { step:"1", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Hydrating Gentle Cleanser", desc:"غسول كريمي ناعم جداً — Soap Free" },
+        { brand:"Bioderma", name:"Atoderm Gel Moussant", desc:"غسول مُرطّب للبشرة الجافة جداً" },
+        { brand:"Vichy", name:"Purete Thermale Cleansing Milk", desc:"حليب تنظيف يُرطّب ويُغذّي أثناء التنظيف" },
+      ]},
+      { step:"2", icon:"💧", title:"مرطب غني", products:[
+        { brand:"La Roche-Posay", name:"Hydraphase Intense Rich", desc:"كريم Rich بـ Hyaluronic Acid — ترطيب 48 ساعة" },
+        { brand:"Vichy", name:"Aqualia Thermal Rich Cream", desc:"مرطب قوي بالماء الحراري للبشرة الجافة جداً" },
+        { brand:"Eucerin", name:"UreaRepair Plus Face Cream 5%", desc:"يُرطّب بعمق ويُعالج الجفاف الشديد" },
+      ]},
+      { step:"3", icon:"☀️", title:"واقي شمس", products:[
+        { brand:"La Roche-Posay", name:"Anthelios Ultra Cream SPF50+", desc:"كريم واقي مُرطّب فائق الراحة" },
+        { brand:"Vichy", name:"Capital Soleil Soothing Cream SPF50", desc:"يحمي ويُرطّب ويُهدّئ البشرة الجافة" },
+      ]},
+    ],
+    evening: [
+      { step:"1", icon:"💧", title:"إزالة مكياج", products:[
+        { brand:"Bioderma", name:"Sensibio H2O Micellar Water", desc:"ميسيلار للبشرة الجافة — يُزيل المكياج بلطف" },
+        { brand:"Vichy", name:"Purete Thermale Cleansing Oil", desc:"زيت تنظيف يُزيل المكياج ويُرطّب" },
+      ]},
+      { step:"2", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Hydrating Gentle Cleanser", desc:"نفس غسول الصباح" },
+      ]},
+      { step:"3", icon:"✨", title:"سيروم ليلي", products:[
+        { brand:"La Roche-Posay", name:"Hyalu B5 Serum", desc:"سيروم Hyaluronic Acid يملأ الخطوط الرفيعة" },
+        { brand:"Vichy", name:"Minéral 89 Booster", desc:"مُرطّب مكثّف بالمعادن يُقوّي الحاجز الجلدي" },
+      ]},
+      { step:"4", icon:"🌙", title:"كريم ليلي غني", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Ultra Night Cream", desc:"يُغذّي ويُصلح الحاجز الجلدي أثناء النوم" },
+        { brand:"Vichy", name:"Neovadiol Night Cream", desc:"كريم ليلي مكثّف للبشرة الجافة الناضجة" },
+        { brand:"Bioderma", name:"Atoderm Intensive Baume", desc:"بلسم مُغذٍّ ومُهدّئ للبشرة الجافة جداً" },
+      ]},
+    ],
+    weekly: [
+      { brand:"La Roche-Posay", name:"Glycolic B5 Mask", desc:"ماسك تقشير لطيف يُجدّد الخلايا دون جفاف" },
+      { brand:"Vichy", name:"Aqualia Thermal Mask", desc:"ماسك مُرطّب مكثّف يُعيد الحيوية" },
+    ]
+  },
+  mixed: {
+    label: "🌗 البشرة المختلطة", color: "#9c5fd4",
+    morning: [
+      { step:"1", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Effaclar Gel Moussant (خفيف)", desc:"يُنظّف الـ T-Zone دون تجفيف الخدود" },
+        { brand:"Vichy", name:"Purete Thermale Fresh Cleansing Gel", desc:"جل مُوازِن للبشرة المختلطة" },
+        { brand:"Bioderma", name:"Sensibio Gel Moussant", desc:"جل ناعم يوازن البشرة المختلطة الحساسة" },
+      ]},
+      { step:"2", icon:"💊", title:"تونر على الـ T-Zone فقط", products:[
+        { brand:"La Roche-Posay", name:"Serozinc Toner", desc:"يُوضع على الجبهة والأنف فقط لتضييق المسام" },
+      ]},
+      { step:"3", icon:"💧", title:"مرطب مُوازِن", products:[
+        { brand:"La Roche-Posay", name:"Hydraphase Intense Legere", desc:"مرطب خفيف يُوازن بين المناطق" },
+        { brand:"Vichy", name:"Aqualia Thermal Light Cream", desc:"مرطب خفيف للبشرة المختلطة" },
+        { brand:"Bioderma", name:"Sebium Hydra (T-Zone) + Toleriane (خدود)", desc:"حل مزدوج لكل منطقة" },
+      ]},
+      { step:"4", icon:"☀️", title:"واقي شمس", products:[
+        { brand:"La Roche-Posay", name:"Anthelios Fluid SPF50+ Dry Touch", desc:"واقي خفيف مناسب للمختلطة" },
+        { brand:"Vichy", name:"Capital Soleil UV-Age Daily SPF50+", desc:"يحمي ويُخفّف التصبّغات" },
+      ]},
+    ],
+    evening: [
+      { step:"1", icon:"💧", title:"إزالة مكياج", products:[
+        { brand:"Bioderma", name:"Sensibio H2O Micellar Water", desc:"مناسب لجميع مناطق الوجه" },
+      ]},
+      { step:"2", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Effaclar Gel Moussant", desc:"نفس غسول الصباح" },
+      ]},
+      { step:"3", icon:"🌙", title:"مرطب ليلي", products:[
+        { brand:"Vichy", name:"Aqualia Thermal Light Night Cream", desc:"يُرطّب الخدود ويُوازن الـ T-Zone ليلاً" },
+        { brand:"La Roche-Posay", name:"Redermic C Night", desc:"يُجدّد البشرة ويُوحّد اللون ليلاً" },
+      ]},
+    ],
+    weekly: [
+      { brand:"Vichy", name:"Normaderm Scrub", desc:"تقشير على الـ T-Zone أسبوعياً فقط" },
+      { brand:"La Roche-Posay", name:"Effaclar Mask", desc:"ماسك طيني على الـ T-Zone فقط" },
+    ]
+  },
+  sensitive: {
+    label: "🌸 البشرة الحساسة", color: "#e8446a",
+    morning: [
+      { step:"1", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Dermo Cleanser", desc:"Fragrance Free — Hypoallergenic — للحساسة جداً" },
+        { brand:"Bioderma", name:"Sensibio Gel Moussant", desc:"مُصمَّم للبشرة التفاعلية الحساسة" },
+        { brand:"Cetaphil", name:"Gentle Skin Cleanser", desc:"Soap Free — ناعم جداً لا يُهيّج البشرة" },
+      ]},
+      { step:"2", icon:"💧", title:"مرطب مُهدِّئ", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Ultra Cream", desc:"كريم مُهدّئ بدون عطور للحساسة جداً" },
+        { brand:"Bioderma", name:"Sensibio Light Cream", desc:"مُرطّب خفيف مُهدّئ بـ Enobiose" },
+        { brand:"Vichy", name:"Toleriane Sensitive Fluid", desc:"مُرطّب مخصص للبشرة الحساسة" },
+      ]},
+      { step:"3", icon:"☀️", title:"واقي شمس", products:[
+        { brand:"La Roche-Posay", name:"Anthelios Mineral SPF50+", desc:"فلتر معدني 100% — آمن للحساسة جداً" },
+        { brand:"Bioderma", name:"Photoderm Mineral SPF50+", desc:"واقي معدني للأطفال والبشرة الحساسة" },
+      ]},
+    ],
+    evening: [
+      { step:"1", icon:"💧", title:"إزالة مكياج", products:[
+        { brand:"Bioderma", name:"Sensibio H2O Micellar Water", desc:"الأشهر عالمياً للبشرة الحساسة — بدون شطف" },
+        { brand:"La Roche-Posay", name:"Micellar Water Ultra Sensitive", desc:"خاص بالبشرة الحساسة جداً" },
+      ]},
+      { step:"2", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Dermo Cleanser", desc:"نفس غسول الصباح" },
+      ]},
+      { step:"3", icon:"🌿", title:"مُهدِّئ (عند التهيّج)", products:[
+        { brand:"La Roche-Posay", name:"Cicaplast Baume B5", desc:"يُهدّئ الاحمرار والتهيّج الشديد فوراً" },
+        { brand:"Vichy", name:"Thermal Water Spray", desc:"مياه حرارية تُهدّئ البشرة المُتهيّجة" },
+      ]},
+      { step:"4", icon:"🌙", title:"كريم ليلي مُهدِّئ", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Ultra Night", desc:"يُعيد بناء الحاجز الجلدي أثناء النوم" },
+        { brand:"Bioderma", name:"Sensibio Rich Cream", desc:"غني ومُغذٍّ للبشرة الحساسة الجافة" },
+      ]},
+    ],
+    weekly: [
+      { brand:"La Roche-Posay", name:"Toleriane Ultra Dermallergo Serum", desc:"سيروم مُكثَّف للحساسية الشديدة — عند الحاجة فقط" },
+    ]
+  },
+  normal: {
+    label: "😊 البشرة العادية", color: "#4caf7d",
+    morning: [
+      { step:"1", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Purifying Foaming Gel", desc:"غسول رغوي خفيف للبشرة العادية" },
+        { brand:"Vichy", name:"Purete Thermale Cleansing Foam", desc:"رغوة تنظيف منعشة للبشرة العادية" },
+        { brand:"Neutrogena", name:"Hydro Boost Cleanser", desc:"يُنظّف ويُرطّب في نفس الوقت" },
+      ]},
+      { step:"2", icon:"💧", title:"مرطب خفيف", products:[
+        { brand:"La Roche-Posay", name:"Hydraphase Intense Legere", desc:"مرطب يومي خفيف بـ Hyaluronic Acid" },
+        { brand:"Vichy", name:"Aqualia Thermal Gel Cream", desc:"جل كريم مُرطّب خفيف مثالي للعادية" },
+        { brand:"Neutrogena", name:"Hydro Boost Water Gel", desc:"جل مائي خفيف بـ Hyaluronic Acid" },
+      ]},
+      { step:"3", icon:"☀️", title:"واقي شمس", products:[
+        { brand:"La Roche-Posay", name:"Anthelios Ultra Light SPF50+", desc:"واقي خفيف جداً للاستخدام اليومي" },
+        { brand:"Vichy", name:"Capital Soleil UV-Age Daily SPF50+", desc:"يحمي ويُخفّف تأثير الشمس على المدى البعيد" },
+      ]},
+    ],
+    evening: [
+      { step:"1", icon:"💧", title:"إزالة مكياج", products:[
+        { brand:"Bioderma", name:"Sensibio H2O Micellar Water", desc:"يُزيل المكياج بلطف دون شطف" },
+      ]},
+      { step:"2", icon:"🧴", title:"غسول", products:[
+        { brand:"La Roche-Posay", name:"Toleriane Purifying Foaming Gel", desc:"نفس غسول الصباح" },
+      ]},
+      { step:"3", icon:"✨", title:"سيروم فيتامين C (اختياري)", products:[
+        { brand:"La Roche-Posay", name:"Pure Vitamin C10 Serum", desc:"يُشرق البشرة ويحمي من التقدّم في السن" },
+        { brand:"Vichy", name:"Liftactiv Vitamin C Serum", desc:"مضاد أكسدة يُوحّد اللون ويُشرق" },
+      ]},
+      { step:"4", icon:"🌙", title:"كريم ليلي", products:[
+        { brand:"La Roche-Posay", name:"Redermic C Night", desc:"يُجدّد البشرة ويحافظ على شبابها" },
+        { brand:"Vichy", name:"Aqualia Thermal Night Spa", desc:"كريم ليلي مُرطّب بتأثير SPA" },
+      ]},
+    ],
+    weekly: [
+      { brand:"La Roche-Posay", name:"Glycolic B5 Mask", desc:"تقشير لطيف أسبوعياً يُجدّد الخلايا ويُشرق" },
+      { brand:"Vichy", name:"Aqualia Thermal Mask", desc:"ماسك مُرطّب مكثّف يُعيد الحيوية" },
+    ]
+  }
+};
+
+function showRoutine(type) {
+  document.querySelectorAll('#routineSelector .skin-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const r = routines[type];
+  const c = r.color;
+
+  const prodCards = arr => arr.map(p => `
+    <div style="background:#faf7f9;border-radius:10px;padding:12px 14px;border:1px solid var(--border)">
+      <div style="font-size:0.68rem;font-weight:800;color:${c};text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">${p.brand}</div>
+      <div style="font-size:0.88rem;font-weight:700;color:var(--dark);margin-bottom:4px;line-height:1.3">${p.name}</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;margin-bottom:8px">${p.desc}</div>
+      <a href="https://alabdellatif-tarshouby.com/ar" target="_blank"
+        style="display:inline-flex;align-items:center;gap:4px;background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;text-decoration:none;transition:opacity 0.2s"
+        onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">🛒 تسوّق</a>
+    </div>`).join('');
+
+  const stepHTML = steps => steps.map(s => `
+    <div style="background:white;border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:12px;border-right:4px solid ${c}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+        <div style="background:${c};color:white;min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:800">${s.step}</div>
+        <div style="font-size:0.95rem;font-weight:800;color:var(--dark)">${s.icon} ${s.title}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">${prodCards(s.products)}</div>
+    </div>`).join('');
+
+  const weeklyHTML = r.weekly?.length ? `
+    <div style="background:white;border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);border-right:4px solid var(--gold);margin-top:4px">
+      <div style="font-size:0.95rem;font-weight:800;color:var(--dark);margin-bottom:12px">🗓️ أسبوعياً</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">
+        ${r.weekly.map(p => `
+          <div style="background:#fdf6ee;border-radius:10px;padding:12px 14px;border:1px solid #f0d8c0">
+            <div style="font-size:0.68rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">${p.brand}</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--dark);margin-bottom:4px">${p.name}</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;margin-bottom:8px">${p.desc}</div>
+            <a href="https://alabdellatif-tarshouby.com/ar" target="_blank"
+              style="display:inline-flex;align-items:center;gap:4px;background:var(--gold);color:white;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;text-decoration:none">🛒 تسوّق</a>
+          </div>`).join('')}
+      </div>
+    </div>` : '';
+
+  document.getElementById('routine-content').innerHTML = `
+    <div style="background:linear-gradient(135deg,${c}22,${c}08);border:2px solid ${c}44;border-radius:16px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px">
+      <div style="font-size:2rem">${r.label.split(' ')[0]}</div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:900;color:var(--dark)">${r.label}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted)">روتين كامل صباحاً ومساءً وأسبوعياً</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px">
+      <div>
+        <div style="background:linear-gradient(135deg,#fff9e6,#fff3cc);border-radius:12px;padding:10px 16px;margin-bottom:14px;font-size:0.88rem;font-weight:800;color:#8a6000">☀️ الروتين الصباحي</div>
+        ${stepHTML(r.morning)}
+      </div>
+      <div>
+        <div style="background:linear-gradient(135deg,#1a0a1215,#1a0a120a);border-radius:12px;padding:10px 16px;margin-bottom:14px;font-size:0.88rem;font-weight:800;color:var(--dark)">🌙 الروتين المسائي</div>
+        ${stepHTML(r.evening)}
+      </div>
+    </div>
+    ${weeklyHTML}
+    <div style="background:#f0faf5;border-radius:12px;padding:12px 16px;border-right:3px solid #27ae60;font-size:0.8rem;color:#1a6a3a;margin-top:14px;line-height:1.7">
+      💡 <strong>ملاحظة:</strong> اضغط "تسوّق" لأي منتج للبحث عنه مباشرةً على موقع آل عبد اللطيف الطرشوبي.
+    </div>`;
+}
+
+// Auto-render routine when section opens
+const _origShowSection = showSection;
+showSection = function(id) {
+  _origShowSection(id);
+  if (id === 'routines' && !document.getElementById('routine-content').innerHTML.trim()) {
+    const firstBtn = document.querySelector('#routineSelector .skin-btn');
+    if (firstBtn) { firstBtn.dispatchEvent(new MouseEvent('click', {bubbles:true})); }
+  }
+};
+</script>
+
+<!-- ===== PRODUCT SECTIONS IN MAIN ===== -->
+<script>
+// Inject product sections into main div
+document.addEventListener('DOMContentLoaded', () => {
+  const main = document.querySelector('.main');
+
+  // Inject routines section first
+  const routineDiv = document.createElement('div');
+  routineDiv.className = 'section';
+  routineDiv.id = 'routines';
+  routineDiv.innerHTML = `
+    <div class="section-header">
+      <h2>⭐ روتين كامل لكل نوع بشرة</h2>
+      <p>منتجات حقيقية من La Roche-Posay وVichy وBioderma — روتين صباحي ومسائي وأسبوعي</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="skin-type-selector" id="routineSelector">
+      <button class="skin-btn active" onclick="showRoutine('oily')">💧 الدهنية</button>
+      <button class="skin-btn" onclick="showRoutine('dry')">🌵 الجافة</button>
+      <button class="skin-btn" onclick="showRoutine('mixed')">🌗 المختلطة</button>
+      <button class="skin-btn" onclick="showRoutine('sensitive')">🌸 الحساسة</button>
+      <button class="skin-btn" onclick="showRoutine('normal')">😊 العادية</button>
+    </div>
+    <div id="routine-content"></div>
+  `;
+  main.appendChild(routineDiv);
+
+  const sections = [
+    { id: 'prod_cleansers', title: '🧴 ترشيحات: غسولات البشرة', sub: 'جميع أنواع الغسولات المُرشَّحة حسب نوع البشرة من الـ PDF', containers: [
+      'sec-cleansers-oily','sec-cleansers-dry','sec-cleansers-sensitive','sec-cleansers-micellar'
+    ]},
+    { id: 'prod_toners', title: '💦 ترشيحات: التونر', sub: 'التونر المناسب حسب نوع البشرة', containers: ['sec-toners-all']},
+    { id: 'prod_moisturizers', title: '🫧 ترشيحات: المرطبات', sub: 'كريمات الترطيب لكل نوع بشرة', containers: [
+      'sec-moist-dry','sec-moist-oily','sec-moist-normal'
+    ]},
+    { id: 'prod_sunscreen', title: '☀️ ترشيحات: واقيات الشمس', sub: 'واقيات الشمس حسب نوع البشرة والاستخدام', containers: [
+      'sec-sun-oily','sec-sun-dry','sec-sun-sensitive','sec-sun-tinted','sec-sun-eye'
+    ]},
+    { id: 'prod_acne', title: '💊 ترشيحات: علاج الحبوب', sub: 'منتجات علاج الحبوب والبشرة الدهنية', containers: ['sec-acne-all']},
+    { id: 'prod_whitening', title: '🌸 ترشيحات: التفتيح', sub: 'منتجات تفتيح الوجه والبقع والمناطق الحساسة', containers: [
+      'sec-white-face','sec-white-spots','sec-white-sensitive'
+    ]},
+    { id: 'prod_eye', title: '👁️ ترشيحات: محيط العين', sub: 'منتجات هالات سوداء وانتفاخات وتجاعيد حول العين', containers: ['sec-eye-all']},
+    { id: 'prod_wrinkles', title: '〰️ ترشيحات: التجاعيد', sub: 'منتجات الخطوط الرفيفة والتجاعيد العميقة', containers: ['sec-wrinkle-mild','sec-wrinkle-deep']},
+    { id: 'prod_hair', title: '💇 ترشيحات: منتجات الشعر', sub: 'شامبوهات، أمبولات، Minoxidil، فيتامينات، كيراتين', containers: [
+      'sec-hair-shampoo','sec-hair-ampules','sec-hair-minoxidil','sec-hair-vitamins','sec-hair-keratin'
+    ]},
+    { id: 'prod_special', title: '✨ ترشيحات: منتجات خاصة', sub: 'ديرما رولر، بعد الشمس، سيلوليت، علامات تمدد، قدمين، شفاه، رموش', containers: [
+      'sec-sp-aftersun','sec-sp-cellulite','sec-sp-stretch','sec-sp-derma','sec-sp-foot','sec-sp-lip','sec-sp-lash'
+    ]},
+  ];
+
+  sections.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'section';
+    div.id = s.id;
+    div.innerHTML = `
+      <div class="section-header">
+        <h2>${s.title}</h2>
+        <p>${s.sub}</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="info-note" style="margin-bottom:16px">
+        📌 هذه الترشيحات مستخرجة من الـ PDF التدريبي الخاص بالبرنامج. استخدمها كمرجع سريع عند التعامل مع العملاء.
+      </div>
+      ${s.containers.map(c => `<div id="${c}"></div>`).join('')}
+    `;
+    main.appendChild(div);
+  });
+});
 </script>
 </body>
 </html>
