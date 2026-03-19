@@ -993,17 +993,28 @@ body {
 </div>
 
 <script>
-(function() {
-  if (sessionStorage.getItem('cosmo_auth') === 'ok') {
-    document.getElementById('password-screen').style.display = 'none';
-  }
-})();
+var COSMO_PW = 'M3A';
+
+function cosmoIsAuth() {
+  try { if (sessionStorage.getItem('cosmo_auth') === 'ok') return true; } catch(e){}
+  try { if (localStorage.getItem('cosmo_auth') === 'ok') return true; } catch(e){}
+  return false;
+}
+
+function cosmoSetAuth() {
+  try { sessionStorage.setItem('cosmo_auth', 'ok'); } catch(e){}
+  try { localStorage.setItem('cosmo_auth', 'ok'); } catch(e){}
+}
+
+if (cosmoIsAuth()) {
+  document.getElementById('password-screen').style.display = 'none';
+}
 
 function checkPassword() {
-  var val = document.getElementById('pw-input').value;
+  var val = document.getElementById('pw-input').value.trim();
   var err = document.getElementById('pw-error');
-  if (val === 'M3A') {
-    sessionStorage.setItem('cosmo_auth', 'ok');
+  if (val === COSMO_PW) {
+    cosmoSetAuth();
     var screen = document.getElementById('password-screen');
     screen.style.transition = 'opacity 0.4s';
     screen.style.opacity = '0';
@@ -1012,6 +1023,7 @@ function checkPassword() {
     err.style.opacity = '1';
     document.getElementById('pw-input').style.borderColor = 'rgba(232,68,106,0.8)';
     document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
     setTimeout(function() {
       err.style.opacity = '0';
       document.getElementById('pw-input').style.borderColor = 'rgba(255,255,255,0.15)';
