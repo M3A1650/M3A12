@@ -1208,6 +1208,11 @@ window.addEventListener('DOMContentLoaded', function() {
       <span class="icon">🌱</span> نمط الحياة
     </div>
   </div>
+
+  <div class="nav-section-title">الفريق</div>
+  <div class="nav-item" onclick="showSection('team_notes')">
+    <span class="icon">💬</span> ملاحظات الفريق
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -2671,6 +2676,76 @@ window.addEventListener('DOMContentLoaded', function() {
           <div style="font-size:2rem;margin-bottom:8px">🧴</div>
           <div style="font-weight:800;margin-bottom:4px;color:var(--dark)">روتين العناية</div>
           <div style="font-size:0.78rem;color:var(--text-muted)">غسول، مرطب، واقي شمس يومياً</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TEAM NOTES SECTION ===== -->
+  <div class="section" id="team_notes">
+    <div class="section-header">
+      <h2>💬 ملاحظات الفريق</h2>
+      <p>اكتب ملاحظاتك أو أسئلتك لتطوير الموقع — هتتحفظ للكل</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- FORM -->
+    <div style="background:white;border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);border-right:4px solid var(--rose);max-width:680px;margin-bottom:28px">
+      <div style="font-size:1rem;font-weight:800;color:var(--dark);margin-bottom:20px">✍️ إضافة ملاحظة جديدة</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px">الاسم</label>
+          <input id="note-name" type="text" placeholder="اسمك" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif;font-size:0.88rem;outline:none;box-sizing:border-box;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+        <div>
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px">مكان العمل</label>
+          <input id="note-workplace" type="text" placeholder="الفرع / القسم" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif;font-size:0.88rem;outline:none;box-sizing:border-box;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="font-size:0.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px">الملاحظة أو السؤال</label>
+        <textarea id="note-text" rows="4" placeholder="اكتب ملاحظتك هنا..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif;font-size:0.88rem;outline:none;box-sizing:border-box;resize:vertical;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px">
+        <button onclick="submitNote()" id="note-submit-btn" style="background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:white;border:none;padding:11px 28px;border-radius:30px;font-family:Cairo,sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+          📤 إرسال
+        </button>
+        <div id="note-status" style="font-size:0.82rem;font-weight:700;opacity:0;transition:opacity 0.3s"></div>
+      </div>
+    </div>
+
+    <!-- NOTES LIST -->
+    <div style="background:white;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+        <div style="font-size:1rem;font-weight:800;color:var(--dark)">📋 الملاحظات المرسلة</div>
+        <button onclick="checkNotesPassword()" style="background:var(--bg);border:1.5px solid var(--border);padding:7px 16px;border-radius:20px;font-family:Cairo,sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;color:var(--text-muted);transition:var(--transition)" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border)'">
+          🔒 عرض الملاحظات
+        </button>
+      </div>
+
+      <!-- Locked state -->
+      <div id="notes-locked" style="text-align:center;padding:32px 20px">
+        <div style="font-size:2.5rem;margin-bottom:12px">🔒</div>
+        <div style="font-weight:700;color:var(--dark);margin-bottom:8px">الملاحظات محمية</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px">أدخل الباسورد لعرض الملاحظات</div>
+        <div style="display:flex;gap:8px;justify-content:center;max-width:300px;margin:0 auto">
+          <input id="notes-pw-input" type="password" placeholder="الباسورد" onkeydown="if(event.key==='Enter')checkNotesPassword()" style="flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif;font-size:0.88rem;outline:none;text-align:center;letter-spacing:3px;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'">
+          <button onclick="checkNotesPassword()" style="background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:white;border:none;padding:9px 18px;border-radius:10px;font-family:Cairo,sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer">دخول</button>
+        </div>
+        <div id="notes-pw-error" style="color:#e8446a;font-size:0.78rem;font-weight:700;margin-top:8px;min-height:18px;opacity:0;transition:opacity 0.2s">❌ باسورد غلط</div>
+      </div>
+
+      <!-- Unlocked state -->
+      <div id="notes-unlocked" style="display:none">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:12px;gap:8px">
+          <button onclick="loadNotes()" style="background:var(--bg);border:1.5px solid var(--border);padding:6px 14px;border-radius:20px;font-family:Cairo,sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;color:var(--text-muted)" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border)'">🔄 تحديث</button>
+          <button onclick="lockNotes()" style="background:var(--bg);border:1.5px solid var(--border);padding:6px 14px;border-radius:20px;font-family:Cairo,sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;color:var(--text-muted)" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border)'">🔒 قفل</button>
+        </div>
+        <div id="notes-list">
+          <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.88rem">⏳ جاري التحميل...</div>
         </div>
       </div>
     </div>
@@ -5133,6 +5208,9 @@ showSection = function(id) {
   }
   if (id === 'prod_wrinkles') {
     setTimeout(function() { renderAntiAging(); }, 50);
+  }
+  if (id === 'team_notes') {
+    // notes locked by default - user must enter password
   }
 };
 
@@ -9307,6 +9385,132 @@ function wCopyMsg(btn) {
     btn.innerHTML = '✅ تم النسخ!'; btn.classList.add('copied');
     setTimeout(function() { btn.innerHTML = '📋 نسخ الرسالة'; btn.classList.remove('copied'); }, 2500);
   });
+}
+
+// ===== TEAM NOTES =====
+var NOTES_API = 'https://script.google.com/macros/s/AKfycbywdTP3O0CkONe2lce7dKcBQzhErqY8dv2ySkZw0RmldN9rQAxAoOPIq2qYNvU_9nva/exec';
+var NOTES_VIEW_PW = 'M3A1';
+
+function checkNotesPassword() {
+  var input = document.getElementById('notes-pw-input');
+  var err   = document.getElementById('notes-pw-error');
+  if (!input) { unlockNotes(); return; }
+  if (input.value.trim() === NOTES_VIEW_PW) {
+    unlockNotes();
+  } else {
+    err.style.opacity = '1';
+    input.value = '';
+    input.focus();
+    setTimeout(function() { err.style.opacity = '0'; }, 2000);
+  }
+}
+
+function unlockNotes() {
+  document.getElementById('notes-locked').style.display = 'none';
+  document.getElementById('notes-unlocked').style.display = 'block';
+  loadNotes();
+}
+
+function lockNotes() {
+  document.getElementById('notes-locked').style.display = 'block';
+  document.getElementById('notes-unlocked').style.display = 'none';
+  document.getElementById('notes-list').innerHTML = '';
+  var input = document.getElementById('notes-pw-input');
+  if (input) input.value = '';
+}
+
+
+
+function submitNote() {
+  var name      = document.getElementById('note-name').value.trim();
+  var workplace = document.getElementById('note-workplace').value.trim();
+  var text      = document.getElementById('note-text').value.trim();
+  var status    = document.getElementById('note-status');
+  var btn       = document.getElementById('note-submit-btn');
+
+  if (!name || !text) {
+    status.textContent = '⚠️ اكتب اسمك والملاحظة';
+    status.style.color = '#e07a30';
+    status.style.opacity = '1';
+    setTimeout(function() { status.style.opacity = '0'; }, 3000);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الإرسال...';
+
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('ar-EG') + ' ' + now.toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' });
+  var payload = JSON.stringify({ date: dateStr, name: name, workplace: workplace || '—', note: text });
+
+  fetch(NOTES_API, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: payload
+  })
+  .then(function() {
+    status.textContent = '✅ تم الإرسال بنجاح!';
+    status.style.color = '#27ae60';
+    status.style.opacity = '1';
+    document.getElementById('note-name').value = '';
+    document.getElementById('note-workplace').value = '';
+    document.getElementById('note-text').value = '';
+    setTimeout(function() { status.style.opacity = '0'; }, 3000);
+    setTimeout(function() { loadNotes(); }, 2000);
+  })
+  .catch(function() {
+    status.textContent = '❌ في مشكلة في الإرسال، حاول تاني';
+    status.style.color = '#e74c3c';
+    status.style.opacity = '1';
+    setTimeout(function() { status.style.opacity = '0'; }, 4000);
+  })
+  .finally(function() {
+    btn.disabled = false;
+    btn.textContent = '📤 إرسال';
+  });
+}
+
+function loadNotes() {
+  var list = document.getElementById('notes-list');
+  if (!list) return;
+  list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.88rem">⏳ جاري التحميل...</div>';
+
+  // JSONP - يتجاوز CORS
+  var cbName = 'cosmoNotesCallback_' + Date.now();
+  var script = document.createElement('script');
+
+  window[cbName] = function(data) {
+    delete window[cbName];
+    document.head.removeChild(script);
+    if (!data.rows || data.rows.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text-muted);font-size:0.88rem">لا توجد ملاحظات بعد</div>';
+      return;
+    }
+    var rows = data.rows.slice().reverse();
+    var html = '';
+    rows.forEach(function(row) {
+      html += '<div style="background:var(--bg);border-radius:12px;padding:16px 18px;margin-bottom:12px;border-right:3px solid var(--rose)">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px">'
+        + '<div style="display:flex;align-items:center;gap:8px">'
+        + '<span style="font-size:0.88rem;font-weight:800;color:var(--dark)">' + (row[1]||'') + '</span>'
+        + (row[2] && row[2] !== '—' ? '<span style="background:var(--border);color:var(--text-muted);padding:2px 10px;border-radius:10px;font-size:0.72rem;font-weight:600">' + row[2] + '</span>' : '')
+        + '</div>'
+        + '<span style="font-size:0.72rem;color:var(--text-muted)">' + (row[0]||'') + '</span>'
+        + '</div>'
+        + '<div style="font-size:0.86rem;color:var(--text);line-height:1.7">' + (row[3]||'') + '</div>'
+        + '</div>';
+    });
+    list.innerHTML = html;
+  };
+
+  script.onerror = function() {
+    delete window[cbName];
+    list.innerHTML = '<div style="text-align:center;padding:24px;color:#e74c3c;font-size:0.85rem">❌ تعذر تحميل الملاحظات</div>';
+  };
+
+  script.src = NOTES_API + '?callback=' + cbName;
+  document.head.appendChild(script);
 }
 
 </script>
