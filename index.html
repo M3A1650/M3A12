@@ -1213,6 +1213,9 @@ window.addEventListener('DOMContentLoaded', function() {
   <div class="nav-item" onclick="showSection('training')">
     <span class="icon">🎓</span> التدريب التفاعلي
   </div>
+  <div class="nav-item" onclick="showSection('comparison')">
+    <span class="icon">⚖️</span> مقارنة المنتجات
+  </div>
   <div class="nav-item" onclick="showSection('team_notes')">
     <span class="icon">💬</span> ملاحظات الفريق
   </div>
@@ -2694,6 +2697,9 @@ window.addEventListener('DOMContentLoaded', function() {
     <div id="training-content"></div>
   </div>
 
+  <!-- ===== COMPARISON SECTION ===== -->
+  <div class="section" id="comparison"></div>
+
   <!-- ===== TEAM NOTES SECTION ===== -->
   <div class="section" id="team_notes">
     <div class="section-header">
@@ -3763,9 +3769,14 @@ const sectionTitles = {
 };
 
 function showSection(id) {
+  const target = document.getElementById(id);
+  if (!target) {
+    console.warn('Cosmo Pro: section not found →', id);
+    return;
+  }
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  target.classList.add('active');
   document.getElementById('topbarTitle').textContent = sectionTitles[id] || id;
   const navItems = document.querySelectorAll('.nav-item');
   navItems.forEach(item => {
@@ -5138,7 +5149,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // showSection override — safe lazy init
 window._baseShowSection = showSection;
 showSection = function(id) {
-  window._baseShowSection(id);
+  // If section not yet in DOM (dynamic sections created in DOMContentLoaded), retry after a tick
+  if (!document.getElementById(id)) {
+    setTimeout(function() { window._baseShowSection(id); }, 80);
+  } else {
+    window._baseShowSection(id);
+  }
   if (id === 'routines') {
     setTimeout(function() {
       const rc = document.getElementById('routine-content');
@@ -5221,6 +5237,9 @@ showSection = function(id) {
   }
   if (id === 'prod_wrinkles') {
     setTimeout(function() { renderAntiAging(); }, 50);
+  }
+  if (id === 'comparison') {
+    setTimeout(function() { if (typeof initComparison === 'function') initComparison(); }, 50);
   }
   if (id === 'team_notes') {
     // notes locked by default - user must enter password
@@ -10882,6 +10901,172 @@ function loadNotes() {
   };
   script.src = NOTES_API + '?callback=' + cbName;
   document.head.appendChild(script);
+}
+
+
+// ===== PRODUCT COMPARISON =====
+function getAllProductsMap() {
+  var map = {};
+  function addProducts(arr) {
+    if (!arr) return;
+    arr.forEach(function(p) {
+      if (p.code) map[String(p.code)] = p;
+    });
+  }
+  addProducts(window.whiteningStoreProducts);
+  addProducts(window.antiAgingProducts);
+  addProducts(window.eyeProducts);
+  addProducts(window.acneProducts);
+  if (typeof storeData !== 'undefined') {
+    Object.values(storeData).forEach(function(arr) {
+      if (Array.isArray(arr)) addProducts(arr);
+    });
+  }
+  if (typeof allStoreProducts !== 'undefined') {
+    addProducts(allStoreProducts);
+  }
+  return map;
+}
+
+function inferTexture(p) {
+  var combined = ((p.name||'') + ' ' + (p.desc||'') + ' ' + (p.type||'')).toLowerCase();
+  if (/سيروم|serum/.test(combined))               return 'سيروم 💧';
+  if (/كريم جل|جل كريم/.test(combined))           return 'كريم جل ✨';
+  if (/جل|gel/.test(combined))                    return 'جل 🌊';
+  if (/كريم|cream/.test(combined))                return 'كريم 🫙';
+  if (/غسول|لوشن|lotion/.test(combined))          return 'غسول/لوشن 🧴';
+  if (/مستحلب|emulsion/.test(combined))           return 'مستحلب';
+  if (/زيت|oil/.test(combined))                   return 'زيت 🌿';
+  if (/ماسك|mask|قناع/.test(combined))            return 'ماسك 🎭';
+  if (/صابون|soap/.test(combined))                return 'صابونة 🫧';
+  return 'منتج 📦';
+}
+
+function inferSkinTypes(p) {
+  var text = ((p.name||'') + ' ' + (p.desc||'')).toLowerCase();
+  var types = [];
+  if (/دهني|دهنية|مختلط|مختلطة/.test(text))            types.push('دهنية/مختلطة 💧');
+  if (/جاف|جافة/.test(text))                           types.push('جافة 🌵');
+  if (/حساس|حساسة/.test(text))                         types.push('حساسة 🌸');
+  if (/حبوب|حب الشباب|بثور/.test(text))                types.push('بشرة الحبوب 💊');
+  if (/جميع.*أنواع|لجميع|كل.*أنواع/.test(text))        types.push('جميع الأنواع ✅');
+  if (types.length === 0) types.push('غير محدد');
+  return types.join(' — ');
+}
+
+function extractIngredients(desc) {
+  if (!desc) return 'غير محدد';
+  var match = desc.match(/(?:يحتوي|غني بـ?|يضم)[\s\w]*(على|بـ)?([^.،\n]{10,100})/);
+  if (match) return match[2].trim();
+  return desc.substring(0, 120) + (desc.length > 120 ? '...' : '');
+}
+
+function initComparison() {
+  var sec = document.getElementById('comparison');
+  if (!sec) return;
+  sec.innerHTML =
+    '<div class="section-header"><h2>⚖️ مقارنة المنتجات</h2>'
+    + '<p>أدخل كود منتجين وهيطلعلك مقارنة جاهزة للعميل</p>'
+    + '<div class="section-divider"></div></div>'
+    + '<div style="background:white;border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);max-width:680px;margin-bottom:24px">'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">'
+    + '<div><label style="font-size:0.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px">📦 كود المنتج الأول</label>'
+    + '<input id="cmp-code1" type="text" placeholder="مثال: 109681" style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif;font-size:1rem;font-weight:700;outline:none;box-sizing:border-box;text-align:center;letter-spacing:2px"></div>'
+    + '<div><label style="font-size:0.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px">📦 كود المنتج التاني</label>'
+    + '<input id="cmp-code2" type="text" placeholder="مثال: 115002" style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif;font-size:1rem;font-weight:700;outline:none;box-sizing:border-box;text-align:center;letter-spacing:2px"></div>'
+    + '</div>'
+    + '<button id="cmp-btn" style="width:100%;background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:white;border:none;padding:13px;border-radius:var(--radius-sm);font-family:Cairo,sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer">⚖️ قارن</button>'
+    + '<div id="cmp-error" style="color:#e74c3c;font-size:0.82rem;font-weight:700;margin-top:10px;min-height:18px;opacity:0;transition:opacity 0.2s;text-align:center"></div>'
+    + '</div>'
+    + '<div id="cmp-result"></div>';
+
+  document.getElementById('cmp-btn').addEventListener('click', runComparison);
+  document.getElementById('cmp-code1').addEventListener('keydown', function(e){ if(e.key==='Enter') runComparison(); });
+  document.getElementById('cmp-code2').addEventListener('keydown', function(e){ if(e.key==='Enter') runComparison(); });
+}
+
+function runComparison() {
+  var code1 = document.getElementById('cmp-code1').value.trim();
+  var code2 = document.getElementById('cmp-code2').value.trim();
+  var err   = document.getElementById('cmp-error');
+  var res   = document.getElementById('cmp-result');
+
+  if (!code1 || !code2) {
+    err.textContent = 'أدخل كودين عشان تقارن'; err.style.opacity='1';
+    setTimeout(function(){ err.style.opacity='0'; }, 2500); return;
+  }
+  if (code1 === code2) {
+    err.textContent = 'الكودين متشابهين — أدخل منتجين مختلفين'; err.style.opacity='1';
+    setTimeout(function(){ err.style.opacity='0'; }, 2500); return;
+  }
+
+  var map = getAllProductsMap();
+  var p1  = map[code1];
+  var p2  = map[code2];
+
+  if (!p1) { err.textContent = 'الكود الأول (' + code1 + ') مش موجود'; err.style.opacity='1'; setTimeout(function(){ err.style.opacity='0'; }, 3000); return; }
+  if (!p2) { err.textContent = 'الكود التاني (' + code2 + ') مش موجود'; err.style.opacity='1'; setTimeout(function(){ err.style.opacity='0'; }, 3000); return; }
+
+  var price1 = typeof p1.price === 'number' ? p1.price.toLocaleString('ar-EG') + ' جنيه' : String(p1.price);
+  var price2 = typeof p2.price === 'number' ? p2.price.toLocaleString('ar-EG') + ' جنيه' : String(p2.price);
+  var n1 = parseFloat(String(p1.price).replace(/[^0-9.]/g,''));
+  var n2 = parseFloat(String(p2.price).replace(/[^0-9.]/g,''));
+
+  var rows = [
+    { label:'💰 السعر',            v1:price1,                    v2:price2,           hl: n1<n2?'1':n2<n1?'2':'' },
+    { label:'🧴 القوام',           v1:inferTexture(p1),          v2:inferTexture(p2),  hl:'' },
+    { label:'🌸 نوع البشرة',       v1:inferSkinTypes(p1),        v2:inferSkinTypes(p2),hl:'' },
+    { label:'🔬 المكونات',         v1:extractIngredients(p1.desc),v2:extractIngredients(p2.desc),hl:'' },
+    { label:'📝 الوصف',            v1:p1.desc||'—',              v2:p2.desc||'—',     hl:'' },
+  ];
+
+  var name1 = p1.name.length>40 ? p1.name.substring(0,40)+'...' : p1.name;
+  var name2 = p2.name.length>40 ? p2.name.substring(0,40)+'...' : p2.name;
+
+  var tableHTML = '<table style="width:100%;border-collapse:collapse;font-size:0.86rem">'
+    + '<thead><tr>'
+    + '<th style="background:var(--dark);color:white;padding:12px 14px;text-align:right;font-size:0.8rem;width:20%">المعيار</th>'
+    + '<th style="background:var(--rose);color:white;padding:12px 14px;text-align:right;width:40%">' + name1 + '<div style="font-size:0.7rem;opacity:0.85;margin-top:3px">كود: ' + code1 + '</div></th>'
+    + '<th style="background:#b8860b;color:white;padding:12px 14px;text-align:right;width:40%">' + name2 + '<div style="font-size:0.7rem;opacity:0.85;margin-top:3px">كود: ' + code2 + '</div></th>'
+    + '</tr></thead><tbody>';
+
+  rows.forEach(function(row, i) {
+    var bg = i%2===0 ? '#faf7f9' : 'white';
+    var s1 = row.hl==='1' ? 'color:#27ae60;font-weight:800' : '';
+    var s2 = row.hl==='2' ? 'color:#27ae60;font-weight:800' : '';
+    tableHTML += '<tr>'
+      + '<td style="padding:12px 14px;background:' + bg + ';font-weight:700;color:var(--text-muted);border-bottom:1px solid var(--border);vertical-align:top">' + row.label + '</td>'
+      + '<td style="padding:12px 14px;background:' + bg + ';border-bottom:1px solid var(--border);border-right:3px solid var(--rose-light);line-height:1.7;vertical-align:top;' + s1 + '">' + row.v1 + (row.hl==='1'?' 🏆':'') + '</td>'
+      + '<td style="padding:12px 14px;background:' + bg + ';border-bottom:1px solid var(--border);border-right:3px solid #f0d080;line-height:1.7;vertical-align:top;' + s2 + '">' + row.v2 + (row.hl==='2'?' 🏆':'') + '</td>'
+      + '</tr>';
+  });
+  tableHTML += '</tbody></table>';
+
+  var copyText = 'مقارنة المنتجات\n'
+    + '══════════════\n'
+    + 'المنتج 1: ' + p1.name + '\n'
+    + 'المنتج 2: ' + p2.name + '\n'
+    + '══════════════\n'
+    + rows.map(function(r){ return r.label + '\n  منتج 1: ' + r.v1 + '\n  منتج 2: ' + r.v2; }).join('\n──────────\n')
+    + '\n══════════════\n🛒 للطلب: alabdellatif-tarshouby.com/ar';
+
+  res.innerHTML = '<div style="background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px">' + tableHTML + '</div>'
+    + '<div class="rec-copy-box"><button id="cmp-copy-btn" class="rec-copy-btn">📋 نسخ المقارنة للعميل</button>'
+    + '<pre id="cmpCopyText" style="font-size:0.78rem">' + copyText + '</pre></div>';
+
+  document.getElementById('cmp-copy-btn').addEventListener('click', function() {
+    var text = document.getElementById('cmpCopyText').textContent;
+    var btn  = this;
+    navigator.clipboard.writeText(text).then(function(){
+      btn.textContent='✅ تم النسخ!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent='📋 نسخ المقارنة للعميل'; btn.classList.remove('copied'); }, 2500);
+    }).catch(function(){
+      var ta=document.createElement('textarea'); ta.value=text;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent='✅ تم النسخ!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent='📋 نسخ المقارنة للعميل'; btn.classList.remove('copied'); }, 2500);
+    });
+  });
 }
 
 
