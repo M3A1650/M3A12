@@ -1210,6 +1210,9 @@ window.addEventListener('DOMContentLoaded', function() {
   </div>
 
   <div class="nav-section-title">الفريق</div>
+  <div class="nav-item" onclick="showSection('offers_calc')">
+    <span class="icon">🏷️</span> حاسبة العروض
+  </div>
   <div class="nav-item" onclick="showSection('training')">
     <span class="icon">🎓</span> التدريب التفاعلي
   </div>
@@ -2697,6 +2700,56 @@ window.addEventListener('DOMContentLoaded', function() {
     <div id="training-content"></div>
   </div>
 
+  <!-- ===== OFFERS CALCULATOR ===== -->
+  <div class="section" id="offers_calc">
+    <div class="section-header">
+      <h2>🏷️ حاسبة العروض</h2>
+      <p>احسب سعر العرض لكل قطعة وانسخ النتيجة للعميل فوراً</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div style="max-width:680px">
+      <!-- نوع العرض -->
+      <div style="background:white;border-radius:var(--radius);padding:24px 28px;box-shadow:var(--shadow);margin-bottom:18px;border-right:4px solid var(--rose)">
+        <div style="font-size:0.85rem;font-weight:700;color:var(--text-muted);margin-bottom:10px">🏷️ اختار نوع العرض</div>
+        <select id="offerType" onchange="calcOffers()" style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:Cairo,sans-serif;font-size:0.95rem;font-weight:700;color:var(--dark);outline:none;cursor:pointer;background:var(--bg)">
+          <option value="">-- اختر العرض --</option>
+          <optgroup label="🎁 اشتري وهدية">
+            <option value="1+1">1 + 1 مجاناً</option>
+            <option value="2+1">2 + 1 مجاناً</option>
+            <option value="2+2">2 + 2 مجاناً</option>
+          </optgroup>
+          <optgroup label="💸 خصم على الثانية">
+            <option value="1+30s">1 + خصم 30% على الثانية</option>
+            <option value="1+35s">1 + خصم 35% على الثانية</option>
+            <option value="1+40s">1 + خصم 40% على الثانية</option>
+            <option value="1+50s">1 + خصم 50% على الثانية</option>
+            <option value="1+70s">1 + خصم 70% على الثانية</option>
+            <option value="1+90s">1 + خصم 90% على الثانية</option>
+          </optgroup>
+          <optgroup label="🔖 خصم على القطعة">
+            <option value="d10">خصم 10% على القطعة</option>
+            <option value="d15">خصم 15% على القطعة</option>
+            <option value="d20">خصم 20% على القطعة</option>
+            <option value="d25">خصم 25% على القطعة</option>
+            <option value="d30">خصم 30% على القطعة</option>
+            <option value="d35">خصم 35% على القطعة</option>
+            <option value="d50">خصم 50% على القطعة</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <!-- الأسعار -->
+      <div style="background:white;border-radius:var(--radius);padding:24px 28px;box-shadow:var(--shadow);margin-bottom:18px;border-right:4px solid var(--gold)">
+        <div style="font-size:0.85rem;font-weight:700;color:var(--text-muted);margin-bottom:10px">💰 أسعار القطع (كل سعر في سطر منفصل)</div>
+        <textarea id="offerPrices" oninput="calcOffers()" placeholder="مثال:&#10;830&#10;730&#10;650" rows="5" style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:Cairo,sans-serif;font-size:1rem;font-weight:700;outline:none;resize:vertical;box-sizing:border-box;direction:ltr;text-align:center;letter-spacing:2px"></textarea>
+      </div>
+
+      <!-- النتيجة -->
+      <div id="offerResult"></div>
+    </div>
+  </div>
+
   <!-- ===== COMPARISON SECTION ===== -->
   <div class="section" id="comparison"></div>
 
@@ -3739,6 +3792,7 @@ window.products = {
 const sectionTitles = {
   dashboard: 'لوحة التحكم',
   personality: 'أنواع الشخصيات',
+  offers_calc: '🏷️ حاسبة العروض',
   questions: 'الأسئلة الذكية',
   fab: 'نموذج FAB',
   forbidden: 'المحظورات والبدائل',
@@ -5345,7 +5399,7 @@ function showTonerResults() {
       '<div style="margin-bottom:12px;font-size:0.9rem;font-weight:800;color:var(--dark)">📋 رسالة جاهزة للإرسال للعميل:</div>' +
       '<div class="rec-copy-box">' +
         '<button class="rec-copy-btn" onclick="tonerCopyMsg(this)">📋 نسخ الرسالة</button>' +
-        '<pre id="tonerCopyText">' + copyText + '</pre>' +
+        '<pre id="tonerCopyText">' + copyText + '</pre></div>' + renderPrecautions('toner') + '<div style="display:none">' +
       '</div>' +
       '<div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">' +
         '<div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل المنتجات (' + total + ' تونر):</div>' +
@@ -7303,6 +7357,8 @@ function showRecResults() {
         <pre id="recCopyText">${copyText}</pre>
       </div>
 
+      ${renderPrecautions(productType === 'cleansers' ? 'cleanser' : productType === 'toners' ? 'toner' : productType === 'moisturizers' ? 'moisturizer' : productType === 'masks' ? 'mask' : productType === 'scrubs' ? 'scrub' : productType === 'eye' ? 'eye' : productType === 'whitening' ? 'whitening' : productType === 'antiaging' ? 'antiaging' : 'cleanser', 'main-rec-prec')}
+
       <div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">
         <div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل المنتجات المتاحة (${pool.length} منتج):</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:300px;overflow-y:auto;padding-left:4px">
@@ -7514,7 +7570,7 @@ function showMoistResults() {
       '<div style="margin-bottom:12px;font-size:0.9rem;font-weight:800;color:var(--dark)">📋 رسالة جاهزة للإرسال للعميل:</div>' +
       '<div class="rec-copy-box">' +
         '<button class="rec-copy-btn" onclick="moistCopyMsg(this)">📋 نسخ الرسالة</button>' +
-        '<pre id="moistCopyText">' + copyText + '</pre>' +
+        '<pre id="moistCopyText">' + copyText + '</pre></div>' + renderPrecautions('moisturizer') + '<div style="display:none">' +
       '</div>' +
       '<div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">' +
         '<div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل المنتجات المتاحة (' + total + ' مرطب):</div>' +
@@ -7686,7 +7742,7 @@ function showMasksResults() {
       '<div style="margin-bottom:12px;font-size:0.9rem;font-weight:800;color:var(--dark)">📋 رسالة جاهزة للإرسال للعميل:</div>' +
       '<div class="rec-copy-box">' +
         '<button class="rec-copy-btn" onclick="masksCopyMsg(this)">📋 نسخ الرسالة</button>' +
-        '<pre id="masksCopyText">' + copyText + '</pre>' +
+        '<pre id="masksCopyText">' + copyText + '</pre></div>' + renderPrecautions('mask') + '<div style="display:none">' +
       '</div>' +
       '<div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">' +
         '<div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل الماسكات المتاحة (' + total + ' ماسك):</div>' +
@@ -7859,7 +7915,7 @@ function showScrubsResults() {
       '<div style="margin-bottom:12px;font-size:0.9rem;font-weight:800;color:var(--dark)">📋 رسالة جاهزة للإرسال للعميل:</div>' +
       '<div class="rec-copy-box">' +
         '<button class="rec-copy-btn" onclick="scrubsCopyMsg(this)">📋 نسخ الرسالة</button>' +
-        '<pre id="scrubsCopyText">' + copyText + '</pre>' +
+        '<pre id="scrubsCopyText">' + copyText + '</pre></div>' + renderPrecautions('scrub') + '<div style="display:none">' +
       '</div>' +
       '<div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">' +
         '<div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل المقشرات المتاحة (' + total + ' منتج):</div>' +
@@ -8197,6 +8253,9 @@ function showEyeResults() {
         <button class="rec-copy-btn" onclick="eyeCopyMsg(this)">📋 نسخ الرسالة</button>
         <pre id="eyeCopyText">${copyText}</pre>
       </div>
+      ${renderPrecautions('eye','eye-prec')}
+      <div style="display:none">
+      </div>
       <div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">
         <div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل المنتجات المتاحة (${total} منتج):</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:300px;overflow-y:auto">
@@ -8499,6 +8558,9 @@ function showAcneResults() {
       <div class="rec-copy-box">
         <button class="rec-copy-btn" onclick="acneCopyMsg(this)">📋 نسخ الرسالة</button>
         <pre id="acneCopyText">${copyText}</pre>
+      </div>
+      ${renderPrecautions('acne','acne-prec')}
+      <div style="display:none">
       </div>
       <div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">
         <div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل المنتجات المتاحة (${total} منتج):</div>
@@ -8906,7 +8968,7 @@ function showAAResults() {
     + '<div class="rec-cards-grid">' + cardsHTML + '</div>'
     + '<div style="margin-bottom:12px;font-size:0.9rem;font-weight:800;color:var(--dark)">📋 رسالة جاهزة للإرسال للعميل:</div>'
     + '<div class="rec-copy-box"><button class="rec-copy-btn" onclick="aaCopyMsg(this)">📋 نسخ الرسالة</button>'
-    + '<pre id="aaCopyText">' + copyText + '</pre></div>'
+    + '<pre id="aaCopyText">' + copyText + '</pre></div>' + renderPrecautions('antiaging')
     + '<div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">'
     + '<div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل المنتجات المتاحة (' + total + ' منتج):</div>'
     + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:300px;overflow-y:auto">' + allList + '</div>'
@@ -9390,7 +9452,7 @@ function showWhiteningResults() {
     + '<div class="rec-cards-grid">' + cardsHTML + '</div>'
     + '<div style="margin-bottom:12px;font-size:0.9rem;font-weight:800;color:var(--dark)">📋 رسالة جاهزة للإرسال للعميل:</div>'
     + '<div class="rec-copy-box"><button class="rec-copy-btn" onclick="wCopyMsg(this)">📋 نسخ الرسالة</button>'
-    + '<pre id="wCopyText">' + copyText + '</pre></div>'
+    + '<pre id="wCopyText">' + copyText + '</pre></div>' + renderPrecautions('whitening')
     + '<div style="margin-top:16px;background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)">'
     + '<div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 كل المنتجات المتاحة (' + total + ' منتج):</div>'
     + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:300px;overflow-y:auto">' + allList + '</div>'
@@ -11065,6 +11127,244 @@ function runComparison() {
       btn.textContent='✅ تم النسخ!'; btn.classList.add('copied');
       setTimeout(function(){ btn.textContent='📋 نسخ المقارنة للعميل'; btn.classList.remove('copied'); }, 2500);
     });
+  });
+}
+
+// ===== OFFERS CALCULATOR =====
+function calcOffers() {
+  var type   = document.getElementById('offerType').value;
+  var raw    = document.getElementById('offerPrices').value;
+  var result = document.getElementById('offerResult');
+  if (!result) return;
+
+  var prices = raw.split('\n')
+    .map(function(l){ return parseFloat(l.replace(/[^0-9.]/g,'')); })
+    .filter(function(n){ return !isNaN(n) && n > 0; });
+
+  if (!type || prices.length === 0) { result.innerHTML = ''; return; }
+
+  var lines = [];
+  var totalBefore = 0, totalAfter = 0;
+
+  function fmt(n) { return n.toLocaleString('ar-EG', {minimumFractionDigits:0, maximumFractionDigits:2}); }
+
+  if (type === '1+1') {
+    for (var i = 0; i < prices.length; i += 2) {
+      var p1 = prices[i], p2 = prices[i+1] !== undefined ? prices[i+1] : null;
+      totalBefore += p1 + (p2||0); totalAfter += p1;
+      lines.push({ label:'قطعة '+(i+1)+' (المدفوعة)', before:p1, after:p1, saving:0 });
+      if (p2 !== null) lines.push({ label:'قطعة '+(i+2)+' (المجانية)', before:p2, after:0, saving:p2 });
+    }
+  } else if (type === '2+1') {
+    for (var i = 0; i < prices.length; i += 3) {
+      var p1=prices[i]||0, p2=prices[i+1]||0, p3=prices[i+2]||0;
+      var freeVal = prices[i+2] !== undefined ? Math.min(p1,p2,p3) : 0;
+      var sub = p1+p2+(prices[i+2]!==undefined?p3:0);
+      totalBefore += sub; totalAfter += sub - freeVal;
+      lines.push({ label:'قطعة '+(i+1), before:p1, after:p1, saving:0 });
+      if(prices[i+1]!==undefined) lines.push({ label:'قطعة '+(i+2), before:p2, after:p2, saving:0 });
+      if(prices[i+2]!==undefined) lines.push({ label:'قطعة '+(i+3)+' (المجانية)', before:p3, after:0, saving:p3 });
+    }
+  } else if (type === '2+2') {
+    for (var i = 0; i < prices.length; i += 4) {
+      [0,1,2,3].forEach(function(j){
+        if (prices[i+j] === undefined) return;
+        var p = prices[i+j], free = j >= 2;
+        totalBefore += p; totalAfter += free ? 0 : p;
+        lines.push({ label:'قطعة '+(i+j+1)+(free?' (مجانية)':''), before:p, after:free?0:p, saving:free?p:0 });
+      });
+    }
+  } else if (type.indexOf('s') !== -1) {
+    var disc = parseFloat(type.replace('1+','').replace('s','')) / 100;
+    for (var i = 0; i < prices.length; i += 2) {
+      var p1=prices[i], p2=prices[i+1]!==undefined?prices[i+1]:null;
+      totalBefore += p1+(p2||0); totalAfter += p1+(p2?p2*(1-disc):0);
+      lines.push({ label:'قطعة '+(i+1), before:p1, after:p1, saving:0 });
+      if (p2!==null) { var save=p2*disc; lines.push({ label:'قطعة '+(i+2)+' (بعد الخصم)', before:p2, after:p2-save, saving:save }); }
+    }
+  } else if (type.charAt(0) === 'd') {
+    var disc = parseFloat(type.replace('d','')) / 100;
+    prices.forEach(function(p,i){
+      var save=p*disc; totalBefore+=p; totalAfter+=p-save;
+      lines.push({ label:'قطعة '+(i+1), before:p, after:p-save, saving:save });
+    });
+  }
+
+  var totalSaving = totalBefore - totalAfter;
+  var savingPct   = totalBefore > 0 ? ((totalSaving/totalBefore)*100).toFixed(1) : 0;
+
+  var rowsHTML = lines.map(function(l){
+    return '<tr>'
+      +'<td style="padding:10px 14px;font-weight:700;color:var(--dark);border-bottom:1px solid var(--border)">'+l.label+'</td>'
+      +'<td style="padding:10px 14px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);text-decoration:'+(l.saving>0?'line-through':'none')+'">'+fmt(l.before)+' ج</td>'
+      +'<td style="padding:10px 14px;text-align:center;border-bottom:1px solid var(--border);font-weight:900;color:'+(l.saving>0?'#27ae60':'var(--dark)')+'">'+( l.after===0?'<span style="color:#27ae60">مجاناً</span>':fmt(l.after)+' ج')+'</td>'
+      +'<td style="padding:10px 14px;text-align:center;border-bottom:1px solid var(--border);color:#27ae60;font-weight:700">'+(l.saving>0?'− '+fmt(l.saving)+' ج':'—')+'</td>'
+      +'</tr>';
+  }).join('');
+
+  var copyMsg = 'تفاصيل العرض\n══════════════\n'
+    + lines.map(function(l){
+        return l.label+': '+(l.after===0?'مجانا':fmt(l.after)+' جنيه')+(l.saving>0&&l.after>0?' (وفرت '+fmt(l.saving)+' ج)':'');
+      }).join('\n')
+    + '\n══════════════\n'
+    + 'الاجمالي قبل: '+fmt(totalBefore)+' جنيه\n'
+    + 'الاجمالي بعد: '+fmt(totalAfter)+' جنيه\n'
+    + 'التوفير: '+fmt(totalSaving)+' جنيه ('+savingPct+'%)\n'
+    + '══════════════\n للطلب: alabdellatif-tarshouby.com/ar';
+
+  result.innerHTML =
+    '<div style="background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px">'
+    +'<table style="width:100%;border-collapse:collapse;font-size:0.88rem">'
+    +'<thead><tr>'
+    +'<th style="background:var(--dark);color:white;padding:11px 14px;text-align:right">القطعة</th>'
+    +'<th style="background:var(--dark);color:white;padding:11px 14px;text-align:center">السعر الأصلي</th>'
+    +'<th style="background:var(--rose);color:white;padding:11px 14px;text-align:center">بعد العرض</th>'
+    +'<th style="background:#27ae60;color:white;padding:11px 14px;text-align:center">التوفير</th>'
+    +'</tr></thead><tbody>'+rowsHTML+'</tbody>'
+    +'<tfoot><tr>'
+    +'<td colspan="2" style="padding:12px 14px;font-weight:900;color:var(--dark);background:#faf7f9">الإجمالي</td>'
+    +'<td style="padding:12px 14px;text-align:center;font-weight:900;font-size:1.1rem;color:var(--rose-dark);background:#faf7f9">'+fmt(totalAfter)+' ج</td>'
+    +'<td style="padding:12px 14px;text-align:center;font-weight:900;color:#27ae60;background:#faf7f9">− '+fmt(totalSaving)+' ج<div style="font-size:0.72rem">('+savingPct+'%)</div></td>'
+    +'</tr></tfoot>'
+    +'</table></div>'
+    +'<div class="rec-copy-box">'
+    +'<button id="offers-copy-btn" class="rec-copy-btn">نسخ العرض للعميل</button>'
+    +'<pre id="offersCopyText" style="font-size:0.78rem">'+copyMsg+'</pre>'
+    +'</div>';
+
+  document.getElementById('offers-copy-btn').addEventListener('click', function(){
+    var text = document.getElementById('offersCopyText').textContent;
+    var btn = this;
+    navigator.clipboard.writeText(text).then(function(){
+      btn.textContent='تم النسخ!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent='نسخ العرض للعميل'; btn.classList.remove('copied'); },2500);
+    }).catch(function(){
+      var ta=document.createElement('textarea'); ta.value=text;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent='تم النسخ!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent='نسخ العرض للعميل'; btn.classList.remove('copied'); },2500);
+    });
+  });
+}
+
+
+// ===== PRECAUTIONS DATA =====
+var PRECAUTIONS = {
+  cleanser: {
+    title: '📋 نصايح استخدام الغسول',
+    items: [
+      '🔁 اغسل وجهك مرتين بس — صبح وبليل',
+      '💧 استخدم مية فاترة مش سخنة',
+      '🤲 حط الغسول في إيدك الأول ورغّيه كويس — بعدين ضعه على وجهك',
+      '⏱️ سيبه على وجهك دقيقة كاملة عشان المواد الفعالة تشتغل — بعدين اشطف',
+      '🧼 اشطف كويس وجفف بمنشفة ناعمة بدون فرك',
+    ]
+  },
+  toner: {
+    title: '📋 نصايح استخدام التونر',
+    items: [
+      '📋 استخدمه بعد الغسول على وجه نظيف ومجفف',
+      '🧻 ضعه بقطنة أو بإيدك بلطف',
+      '🚫 متشطفوش — سيبه على البشرة',
+      '🌙 لو فيه أحماض (BHA/AHA) استخدمه بالليل بس',
+    ]
+  },
+  moisturizer: {
+    title: '📋 نصايح استخدام المرطب',
+    items: [
+      '⏱️ ضعه فور ما تجفف وجهك عشان يحبس الرطوبة',
+      '☀️ صبح: مرطب + واقي شمس — ضروري جداً',
+      '🌙 بالليل: ممكن تستخدم مرطب أدسم شوية',
+      '🧴 كمية صغيرة تكفي — الزيادة مش بتفيد',
+    ]
+  },
+  mask: {
+    title: '📋 نصايح استخدام الماسك',
+    items: [
+      '📅 مرة أو مرتين في الأسبوع بس — مش أكتر',
+      '⏱️ التزم بالوقت المكتوب على العبوة',
+      '🌊 اشطفه بمية فاترة وبعدين ضع المرطب فوراً',
+      '🚫 متستخدمهوش على بشرة ملتهبة أو محترقة من الشمس',
+    ]
+  },
+  scrub: {
+    title: '📋 نصايح استخدام المقشر',
+    items: [
+      '📅 مرة أو مرتين في الأسبوع بس',
+      '🤲 دلّك بلطف بحركات دايرية — من غير ضغط',
+      '🚫 ابعد عن منطقة العين خالص',
+      '🧴 بعده ضع المرطب فوراً',
+    ]
+  },
+  eye: {
+    title: '📋 نصايح استخدام كريم العين',
+    items: [
+      '💆 ضعه بإصبع البنصر بس — أخف إصبع عندك',
+      '👁️ ربّت بلطف حوالين العين — متفركش',
+      '🌙 صبح وبليل على وجه نظيف',
+      '⚠️ لو لاحظت احمرار أو حرقان — وقف الاستخدام',
+    ]
+  },
+  acne: {
+    title: '📋 نصايح استخدام علاج الحبوب',
+    items: [
+      '🎯 حطه على الحبة بس — مش على الوجه كله',
+      '🚫 متلمسش الحبوب ومتضغطش عليها',
+      '☀️ واقي شمس ضروري يومياً مع العلاج',
+      '⏳ النتيجة بتظهر بعد 4-6 أسابيع — اصبر',
+    ]
+  },
+  whitening: {
+    title: '📋 نصايح استخدام منتج التفتيح',
+    items: [
+      '☀️ واقي شمس يومي إجباري — بدونه مش هيفرق',
+      '🌙 ضعه بالليل لمدة نص ساعة لساعة ثم اشطفه',
+      '📅 النتيجة بتظهر بعد 4-8 أسابيع من الانتظام',
+      '🤲 جفف بلطف — الفرك القوي بيغمق الجلد',
+    ]
+  },
+  antiaging: {
+    title: '📋 نصايح استخدام كريم Anti-Aging',
+    items: [
+      '🌙 استخدمه بالليل بس — الشمس بتقلل فعاليته',
+      '☀️ واقي شمس يومي ضروري معاه',
+      '📈 ابدأ بمرتين في الأسبوع وزود تدريجياً',
+      '⏳ النتيجة بتظهر بعد 8-12 أسبوع من الانتظام',
+    ]
+  }
+};
+
+function renderPrecautions(type, containerId) {
+  var data = PRECAUTIONS[type];
+  if (!data) return '';
+  var html = '<div style="margin-top:20px;background:white;border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow);border-right:4px solid var(--gold)">'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">'
+    + '<div style="font-size:0.95rem;font-weight:800;color:var(--dark)">' + data.title + '</div>'
+    + '<button onclick="copyPrecautions(\''+type+'\',this)" style="background:linear-gradient(135deg,var(--gold),#b8860b);color:white;border:none;padding:7px 18px;border-radius:20px;font-family:Cairo,sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer">📋 نسخ للعميل</button>'
+    + '</div>'
+    + '<ul style="padding-right:4px;list-style:none;margin:0">'
+    + data.items.map(function(item){
+        return '<li style="font-size:0.85rem;line-height:1.8;color:var(--text);padding:4px 0;border-bottom:1px solid var(--border)">' + item + '</li>';
+      }).join('')
+    + '</ul>'
+    + '</div>';
+  return html;
+}
+
+function copyPrecautions(type, btn) {
+  var data = PRECAUTIONS[type];
+  if (!data) return;
+  var text = data.title.replace('⚠️ ','') + '\n══════════════\n'
+    + data.items.join('\n')
+    + '\n══════════════\n🛒 للطلب: alabdellatif-tarshouby.com/ar';
+  navigator.clipboard.writeText(text).then(function(){
+    btn.textContent = '✅ تم النسخ!';
+    setTimeout(function(){ btn.textContent = '📋 نسخ للعميل'; }, 2500);
+  }).catch(function(){
+    var ta = document.createElement('textarea'); ta.value = text;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = '✅ تم النسخ!';
+    setTimeout(function(){ btn.textContent = '📋 نسخ للعميل'; }, 2500);
   });
 }
 
