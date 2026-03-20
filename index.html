@@ -11016,7 +11016,6 @@ function runComparison() {
     { label:'💰 السعر',            v1:price1,                    v2:price2,           hl: n1<n2?'1':n2<n1?'2':'' },
     { label:'🧴 القوام',           v1:inferTexture(p1),          v2:inferTexture(p2),  hl:'' },
     { label:'🌸 نوع البشرة',       v1:inferSkinTypes(p1),        v2:inferSkinTypes(p2),hl:'' },
-    { label:'🔬 المكونات',         v1:extractIngredients(p1.desc),v2:extractIngredients(p2.desc),hl:'' },
     { label:'📝 الوصف',            v1:p1.desc||'—',              v2:p2.desc||'—',     hl:'' },
   ];
 
