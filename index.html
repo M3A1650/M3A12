@@ -1261,6 +1261,9 @@ window.addEventListener('DOMContentLoaded', function() {
     <div class="nav-item" style="padding-right:28px" onclick="showSection('keratin')">
       <span class="icon">💎</span> الكيراتين والبروتين
     </div>
+    <div class="nav-item" style="padding-right:28px" onclick="showSection('hair_dyes_edu')">
+      <span class="icon">🎨</span> الصبغات — دليل شامل
+    </div>
     <div class="nav-section-title" style="padding-right:28px">صحة البشرة</div>
     <div class="nav-item" style="padding-right:28px" onclick="showSection('vitamins')">
       <span class="icon">💊</span> الفيتامينات
@@ -2521,6 +2524,140 @@ window.addEventListener('DOMContentLoaded', function() {
   </div>
 
   <!-- ===== VITAMINS ===== -->
+  <!-- ===== HAIR DYES EDUCATION ===== -->
+  <div class="section" id="hair_dyes_edu">
+    <div class="section-header">
+      <h2>🎨 الصبغات — دليل شامل</h2>
+      <p>كل ما تحتاج معرفته عن الصبغات قبل التوصية</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- أنواع الصبغات -->
+    <div class="card rose">
+      <h3>🔹 أنواع الصبغات</h3>
+      <div class="two-cols" style="margin-top:12px">
+        <div>
+          <h4>1️⃣ Permanent — دائمة</h4>
+          <p>بتخترق الشعرة وبتثبت فيها.</p>
+          <p>✔ أفضل اختيار لتغطية الشعر الأبيض.</p>
+        </div>
+        <div>
+          <h4>2️⃣ Semi-Permanent — نصف دائمة</h4>
+          <p>بتغلف الشعرة من الخارج. بتستمر لعدد غسلات معينة.</p>
+          <p>✔ مثال: L'Oréal Casting</p>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <h4>3️⃣ Temporary — مؤقتة</h4>
+        <p>لون سطحي بيختفي مع أول غسلة. مثال: The Hair Addict، بخاخات الألوان.</p>
+      </div>
+    </div>
+
+    <!-- نظام الأرقام -->
+    <div class="card gold" style="margin-top:16px">
+      <h3>🔢 نظام أرقام الصبغة</h3>
+      <p style="margin-bottom:10px">الرقم بيتكوّن من جزئين:</p>
+      <div class="two-cols">
+        <div style="background:#faf7f9;padding:14px;border-radius:var(--radius-sm)">
+          <div style="font-weight:800;color:var(--rose-dark);margin-bottom:8px">الرقم قبل الفاصلة = اللون الأساسي</div>
+          <ul style="padding-right:16px;line-height:2">
+            <li>1 → أسود</li>
+            <li>3 → بني غامق</li>
+            <li>5 → بني فاتح</li>
+            <li>7 → أشقر</li>
+            <li>9 → أشقر فاتح جداً</li>
+          </ul>
+        </div>
+        <div style="background:#faf7f9;padding:14px;border-radius:var(--radius-sm)">
+          <div style="font-weight:800;color:var(--gold);margin-bottom:8px">الأرقام بعد الفاصلة = اللون الانعكاسي (Reflex)</div>
+          <ul style="padding-right:16px;line-height:2">
+            <li>1 → رمادي (Ash)</li>
+            <li>3 → ذهبي (Golden)</li>
+            <li>4 → نحاسي (Copper)</li>
+            <li>6 → أحمر (Red)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="info-note" style="margin-top:12px">
+        💡 <strong>مثال: 7.17</strong> — 7 = أشقر + 1 و7 = انعكاس رمادي على الأشقر.<br>
+        الألوان الانعكاسية بتقل مع الوقت واللي بيفضل هو اللون الأساسي.
+      </div>
+    </div>
+
+    <!-- الأوكسجين -->
+    <div class="card blue" style="margin-top:16px">
+      <h3>🧪 الأوكسجين (Developer)</h3>
+      <div class="three-cols" style="margin-top:10px">
+        <div style="background:#faf7f9;padding:14px;border-radius:var(--radius-sm);text-align:center">
+          <div style="font-size:1.3rem;font-weight:900;color:#4a90d9">10 Vol</div>
+          <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted)">3%</div>
+          <div style="font-size:0.84rem;margin-top:6px">تغميق اللون أو تونر</div>
+        </div>
+        <div style="background:#fde8ee;padding:14px;border-radius:var(--radius-sm);text-align:center">
+          <div style="font-size:1.3rem;font-weight:900;color:var(--rose-dark)">20 Vol</div>
+          <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted)">6%</div>
+          <div style="font-size:0.84rem;margin-top:6px">الأكثر استخداماً — يغطي الشيب ويفتح 1-2 درجة</div>
+        </div>
+        <div style="background:#fdf3dd;padding:14px;border-radius:var(--radius-sm);text-align:center">
+          <div style="font-size:1.3rem;font-weight:900;color:var(--gold)">30 Vol</div>
+          <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted)">9%</div>
+          <div style="font-size:0.84rem;margin-top:6px">يفتح 2-3 درجات</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- خطوات قبل الصبغة -->
+    <div class="card green" style="margin-top:16px">
+      <h3>✅ خطوات مهمة قبل الصبغة</h3>
+      <ul style="padding-right:18px;line-height:2">
+        <li>اغسل الشعر قبل الصبغة بـ 48 ساعة</li>
+        <li>اترك الصبغة 30 دقيقة (ماعدا Casting = 20 دقيقة)</li>
+        <li>الصبغة غالباً لا تفتح أو تغمق أكثر من درجتين</li>
+        <li>Patch Test 48 ساعة قبل الاستخدام</li>
+        <li>ضعي فازلين حول الجبهة والأذنين لمنع تصبغ الجلد</li>
+        <li>لا تستخدمي الصبغة فوق الحنة مباشرة — انتظري شهر على الأقل</li>
+      </ul>
+    </div>
+
+    <!-- Prodigy -->
+    <div class="card purple" style="margin-top:16px">
+      <h3>💎 L'Oréal Prodigy — معلومات خاصة</h3>
+      <ul style="padding-right:18px;line-height:2">
+        <li>✅ خالية من الأمونيا</li>
+        <li>✅ خالية من Resorcinol (ممكن يسبب تهيج)</li>
+        <li>✅ تحتوي على زيوت مثل زيت الأرجان</li>
+        <li>✅ تغطي الشعر الأبيض بنسبة تصل لـ 100%</li>
+        <li>💡 أثناء الصبغة: دلّك الشعر لتوزيعها جيداً</li>
+      </ul>
+    </div>
+
+    <!-- Casting -->
+    <div class="card" style="margin-top:16px;border-right-color:#b8860b">
+      <h3 style="color:#b8860b">🌀 L'Oréal Casting — معلومات خاصة</h3>
+      <ul style="padding-right:18px;line-height:2">
+        <li>✅ بدون أمونيا</li>
+        <li>⏱️ وقت التأثير: 20 دقيقة فقط</li>
+        <li>📏 تفتح أو تغمق الشعر درجة واحدة فقط</li>
+        <li>🔄 تدوم حتى 28-32 غسلة ثم تختفي تدريجياً</li>
+      </ul>
+    </div>
+
+    <!-- ترشيح حسب الحالة -->
+    <div class="card rose" style="margin-top:16px">
+      <h3>👩‍⚕️ ترشيح الصبغة حسب حالة العميل</h3>
+      <div class="routine-steps" style="margin-top:12px">
+        <div class="routine-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">يريد تغطية الشيب بالكامل</div><div class="step-note">L'Oréal Excellence Crème | Garnier Color Naturals | Palette Intensive</div></div></div>
+        <div class="routine-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">شعره فيه بروتين أو كيراتين (بدون أمونيا)</div><div class="step-note">L'Oréal Prodigy | L'Oréal Casting Crème Gloss</div></div></div>
+        <div class="routine-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">فروة حساسة أو يفضل طبيعي</div><div class="step-note">Phyto Color Hair Dye | Manzanilla Oro Chamomile</div></div></div>
+        <div class="routine-step"><div class="step-num">4</div><div class="step-content"><div class="step-title">لون مؤقت (مناسبة أو يوم واحد)</div><div class="step-note">The Hair Addict Temp Tonz | بخاخات الألوان — بيزول مع أول غسلة</div></div></div>
+        <div class="routine-step"><div class="step-num">5</div><div class="step-content"><div class="step-title">حل سريع للجذور أو للرجالة</div><div class="step-note">Bigen Speedy (5 دقائق) | Bigen Powder (لا يحتاج أوكسجين)</div></div></div>
+      </div>
+    </div>
+
+    <div class="warning-note" style="margin-top:16px">⚠️ <strong>تذكر:</strong> الصبغة فوق الحنة مباشرة ممكن تسبب تفاعل وتخضر أو تتلف الشعر — انتظر شهر على الأقل.</div>
+
+  </div>
+
   <div class="section" id="vitamins">
     <div class="section-header">
       <h2>💊 الفيتامينات والمعادن</h2>
@@ -3804,6 +3941,7 @@ const sectionTitles = {
   dandruff: 'قشرة الشعر',
   keratin: 'الكيراتين والبروتين',
   vitamins: 'الفيتامينات',
+  hair_dyes_edu: '🎨 الصبغات — دليل شامل',
   lifestyle: 'نمط الحياة',
   routines: 'روتين كامل لكل نوع بشرة',
   recommender: '🎯 مُرشِّح المنتجات الذكي',
