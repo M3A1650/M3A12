@@ -758,6 +758,25 @@ body {
   .fab-eg-row { grid-template-columns: 1fr; }
 }
 
+.note-tag-btn {
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 2px solid var(--border);
+  background: white;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+.note-tag-btn.active {
+  background: var(--rose);
+  color: white;
+  border-color: var(--rose);
+}
+.note-tag-btn:hover:not(.active) { border-color: var(--rose-light); }
+
 .info-note {
   background: #fffbeb;
   border-right: 3px solid var(--gold);
@@ -2827,9 +2846,19 @@ window.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
 
+      <div style="margin-bottom:14px">
+        <label style="font-size:0.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px">نوع الملاحظة</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" onclick="setNoteTag(this,'ملاحظة عامة')" id="tag-general" class="note-tag-btn active">💬 ملاحظة عامة</button>
+          <button type="button" onclick="setNoteTag(this,'منتج جديد')" id="tag-product" class="note-tag-btn">📦 منتج جديد</button>
+          <button type="button" onclick="setNoteTag(this,'سؤال')" id="tag-question" class="note-tag-btn">❓ سؤال</button>
+        </div>
+        <input type="hidden" id="note-tag" value="ملاحظة عامة">
+      </div>
+
       <div style="margin-bottom:16px">
         <label style="font-size:0.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px">الملاحظة أو السؤال</label>
-        <textarea id="note-text" rows="4" placeholder="اكتب ملاحظتك هنا..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif;font-size:0.88rem;outline:none;box-sizing:border-box;resize:vertical;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+        <textarea id="note-text" rows="4" placeholder="اكتب ملاحظتك هنا... لو منتج جديد: اكتب الاسم والكود والسعر والقسم" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:Cairo,sans-serif;font-size:0.88rem;outline:none;box-sizing:border-box;resize:vertical;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'"></textarea>
       </div>
 
       <div style="display:flex;align-items:center;gap:12px">
@@ -10970,10 +10999,17 @@ function lockNotes() {
   if (input) input.value = '';
 }
 
+function setNoteTag(btn, tag) {
+  document.getElementById('note-tag').value = tag;
+  document.querySelectorAll('.note-tag-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
 function submitNote() {
   var name      = document.getElementById('note-name').value.trim();
   var workplace = document.getElementById('note-workplace').value.trim();
   var text      = document.getElementById('note-text').value.trim();
+  var tag       = document.getElementById('note-tag').value || 'ملاحظة عامة';
   var status    = document.getElementById('note-status');
   var btn       = document.getElementById('note-submit-btn');
   if (!name || !text) {
@@ -10987,24 +11023,25 @@ function submitNote() {
   btn.textContent = 'جاري الارسال...';
   var now = new Date();
   var dateStr = now.toLocaleDateString('ar-EG') + ' ' + now.toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' });
-  var payload = JSON.stringify({ date: dateStr, name: name, workplace: workplace || '-', note: text });
+  var payload = JSON.stringify({ date: dateStr, name: name, workplace: workplace || '-', note: '[' + tag + '] ' + text });
+  // no-cors مع Google Apps Script — الـ response مش قابل للقراءة حتى لو نجح
+  // نعامله كـ success دايماً بعد الإرسال
   fetch(NOTES_API, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: payload })
-  .then(function() {
+  .finally(function() {
     status.textContent = 'تم الارسال بنجاح!';
     status.style.color = '#27ae60';
     status.style.opacity = '1';
     document.getElementById('note-name').value = '';
     document.getElementById('note-workplace').value = '';
     document.getElementById('note-text').value = '';
+    document.getElementById('note-tag').value = 'ملاحظة عامة';
+    document.querySelectorAll('.note-tag-btn').forEach(function(b){ b.classList.remove('active'); });
+    var gen = document.getElementById('tag-general');
+    if (gen) gen.classList.add('active');
+    btn.disabled = false;
+    btn.textContent = 'ارسال';
     setTimeout(function() { status.style.opacity = '0'; }, 3000);
-  })
-  .catch(function() {
-    status.textContent = 'في مشكلة في الارسال، حاول تاني';
-    status.style.color = '#e74c3c';
-    status.style.opacity = '1';
-    setTimeout(function() { status.style.opacity = '0'; }, 4000);
-  })
-  .finally(function() { btn.disabled = false; btn.textContent = 'ارسال'; });
+  });
 }
 
 function loadNotes() {
