@@ -1123,11 +1123,6 @@ window.addEventListener('DOMContentLoaded', function() {
     <p>الدليل الاحترافي الشامل</p>
   </div>
 
-  <div class="nav-section-title">الرئيسية</div>
-  <div class="nav-item active" onclick="showSection('dashboard')">
-    <span class="icon">🏠</span> لوحة التحكم
-  </div>
-
   <div class="nav-section-title">المنتجات</div>
   <div class="nav-item" onclick="toggleSkinCare()" id="skincare-toggle">
     <span class="icon">🌿</span> العناية بالبشرة
@@ -1293,93 +1288,13 @@ window.addEventListener('DOMContentLoaded', function() {
 <!-- MAIN -->
 <div class="main">
   <div class="topbar">
-    <span class="topbar-title" id="topbarTitle">لوحة التحكم</span>
+    <span class="topbar-title" id="topbarTitle">أنواع الشخصيات</span>
     <span class="topbar-badge">د. محمد أنيس — Cosmo Pro</span>
   </div>
 
   <!-- ===== DASHBOARD ===== -->
-  <div class="section active" id="dashboard">
-    <div class="dashboard-header">
-      <h2>أهلاً بك في Cosmo Pro 💄</h2>
-      <p>دليلك الاحترافي الشامل للعناية بالبشرة والشعر ومهارات البيع</p>
-    </div>
-
-    <div class="cards-grid">
-      <div class="dash-card" onclick="showSection('diag')">
-        <div class="card-icon">🔍</div>
-        <h3>تشخيص البشرة</h3>
-        <p>حدد نوع بشرة العميل واقترح الروتين المناسب فوراً</p>
-      </div>
-      <div class="dash-card" onclick="showSection('questions')">
-        <div class="card-icon">💬</div>
-        <h3>الأسئلة الذكية</h3>
-        <p>أهم الأسئلة التي يجب طرحها لفهم احتياج العميل</p>
-      </div>
-      <div class="dash-card" onclick="showSection('personality')">
-        <div class="card-icon">🧠</div>
-        <h3>أنواع الشخصيات</h3>
-        <p>كيف تتعامل مع كل نوع من العملاء باحترافية</p>
-      </div>
-      <div class="dash-card" onclick="showSection('fab')">
-        <div class="card-icon">🎯</div>
-        <h3>نموذج FAB</h3>
-        <p>حوّل مواصفات المنتج إلى فوائد ملموسة للعميل</p>
-      </div>
-      <div class="dash-card" onclick="showSection('problems')">
-        <div class="card-icon">⚕️</div>
-        <h3>مشاكل البشرة</h3>
-        <p>دليل شامل لمعالجة أهم مشاكل البشرة المختلفة</p>
-      </div>
-      <div class="dash-card" onclick="showSection('vitamins')">
-        <div class="card-icon">💊</div>
-        <h3>الفيتامينات</h3>
-        <p>الفيتامينات والمعادن الأساسية للبشرة والشعر</p>
-      </div>
-      <div class="dash-card" onclick="showSection('hairloss')">
-        <div class="card-icon">🌿</div>
-        <h3>تساقط الشعر</h3>
-        <p>أسباب التساقط وطرق العلاج والمنتجات المناسبة</p>
-      </div>
-      <div class="dash-card" onclick="showSection('keratin')">
-        <div class="card-icon">💎</div>
-        <h3>الكيراتين</h3>
-        <p>كل ما تحتاج معرفته عن الكيراتين والبروتين</p>
-      </div>
-    </div>
-
-    <div class="stat-bar">
-      <h3>📊 لماذا يترك العميل؟ — إحصائيات مهمة</h3>
-      <div class="stat-row">
-        <span class="label">😠 الموقف غير اللائق (Unfriendly Attitude)</span>
-        <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
-        <span class="pct">68%</span>
-      </div>
-      <div class="stat-row">
-        <span class="label">😕 عدم الرضا عن المنتج</span>
-        <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
-        <span class="pct">14%</span>
-      </div>
-      <div class="stat-row">
-        <span class="label">🏪 المنافسة</span>
-        <div class="bar-track"><div class="bar-fill" style="width:9%"></div></div>
-        <span class="pct">9%</span>
-      </div>
-      <div class="stat-row">
-        <span class="label">👥 صداقات أخرى</span>
-        <div class="bar-track"><div class="bar-fill" style="width:5%"></div></div>
-        <span class="pct">5%</span>
-      </div>
-      <div class="stat-row">
-        <span class="label">🚚 الانتقال</span>
-        <div class="bar-track"><div class="bar-fill" style="width:3%"></div></div>
-        <span class="pct">3%</span>
-      </div>
-      <div class="info-note">⭐ <strong>الخلاصة:</strong> 68% من العملاء يتركون بسبب سوء الخدمة وليس المنتج! الابتسامة والاهتمام الحقيقي هما السلاح الأقوى.</div>
-    </div>
-  </div>
-
   <!-- ===== PERSONALITY ===== -->
-  <div class="section" id="personality">
+  <div class="section active" id="personality">
     <div class="section-header">
       <h2>🧠 أنواع الشخصيات</h2>
       <p>عند فهم شخصية العميل ستعرف الطريقة الصحيحة للتعامل معه</p>
@@ -3870,7 +3785,7 @@ window.products = {
 <script>
 // ===== NAVIGATION =====
 const sectionTitles = {
-  dashboard: 'لوحة التحكم',
+
   personality: 'أنواع الشخصيات',
   offers_calc: '🏷️ حاسبة العروض',
   prod_dyes: '🎨 الصبغات',
@@ -4745,6 +4660,8 @@ function renderCleansers() {
         <div style="font-size:0.8rem;color:var(--text-muted)">إجمالي ${totalAll} منتج — اختار التقسيمة المناسبة</div>
       </div>
     </div>
+    <input id="cleanserSearch" type="text" placeholder="🔍 ابحث باسم المنتج أو الكود..." oninput="searchCleansers()" style="width:100%;padding:11px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:Cairo,sans-serif;font-size:0.92rem;outline:none;box-sizing:border-box;margin-bottom:14px">
+    <div id="cleanserSearchResult"></div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px" id="cleanserTabsMain">
       ${tabs.map((t,i) => `
         <button onclick="switchMainCleanserTab('${t.key}',this)"
@@ -4820,43 +4737,61 @@ function renderCleanserBySkin() {
 }
 
 function renderToners() {
-  const sorted = [...products.toners].sort((a, b) => a.price - b.price);
-  document.getElementById('sec-toners-all').innerHTML =
-    '<div class="prod-section-title">💊 جميع منتجات التونر (' + sorted.length + ' منتج)</div>' +
-    '<div class="store-cards-grid">' + sorted.map(p => makePriceCard(p)).join('') + '</div>';
+  buildSectionSearch('sec-toners-all', window.products ? window.products.toners : [], [
+    { key:'skin', field:'skinTypes', label:'نوع البشرة', options:[
+      {value:'all',label:'الكل'},
+      {value:'oily',label:'💧 دهنية / مختلطة'},
+      {value:'dry',label:'🌵 جافة'},
+      {value:'sensitive',label:'🌸 حساسة'},
+      {value:'normal',label:'😊 عادية'},
+    ]},
+  ]);
 }
 
 function renderMoisturizers() {
-  const all = window.products ? window.products.moisturizers : [];
-  const groups = { oily:[], dry:[], sensitive:[], normal:[] };
-  all.forEach(p => {
-    (p.skinTypes||['normal']).forEach(s => {
-      if (groups[s]) groups[s].push(p);
-    });
-  });
-  const skinNames = { oily:'💧 للبشرة الدهنية والمختلطة', dry:'🌵 للبشرة الجافة وشديدة الجفاف', sensitive:'🌸 للبشرة الحساسة', normal:'😊 للبشرة العادية وجميع الأنواع' };
-  ['oily','dry','sensitive','normal'].forEach(s => {
-    const el = document.getElementById('sec-moist-' + s);
-    if (!el) return;
-    const sorted = [...groups[s]].sort((a,b) => a.price - b.price);
-    el.innerHTML = '<div class="prod-section-title">' + skinNames[s] + ' (' + sorted.length + ' منتج)</div>' +
-      (sorted.length ? '<div class="store-cards-grid">' + sorted.map(p => makePriceCard(p)).join('') + '</div>' : '<div class="info-note">لا توجد منتجات</div>');
+  var all = window.products ? window.products.moisturizers : [];
+  buildSectionSearch('sec-moist-oily', all, [
+    { key:'skin', field:'skinTypes', label:'نوع البشرة', options:[
+      {value:'all',label:'الكل'},
+      {value:'oily',label:'💧 دهنية / مختلطة'},
+      {value:'dry',label:'🌵 جافة'},
+      {value:'sensitive',label:'🌸 حساسة'},
+      {value:'normal',label:'😊 عادية'},
+    ]},
+  ]);
+  ['sec-moist-dry','sec-moist-sensitive','sec-moist-normal'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.innerHTML = '';
   });
 }
 
 function renderSunscreens() {
-  document.getElementById('sec-sun-oily').innerHTML = makeSection('💧 للبشرة الدهنية', products.sunscreens.oily);
-  document.getElementById('sec-sun-dry').innerHTML = makeSection('🌵 للبشرة الجافة والعادية', products.sunscreens.dry);
-  document.getElementById('sec-sun-sensitive').innerHTML = makeSection('🌸 للبشرة الحساسة', products.sunscreens.sensitive);
-  document.getElementById('sec-sun-tinted').innerHTML = makeSection('🎨 Tinted & BB Cream', products.sunscreens.tinted, 'gold-border');
-  document.getElementById('sec-sun-eye').innerHTML = makeSection('👁️ واقي شمس للعين', products.sunscreens.eye);
+  var sp = (window.products && window.products.sunscreens) || {};
+  var all = [].concat(sp.oily||[], sp.dry||[], sp.sensitive||[], sp.tinted||[], sp.eye||[]);
+  buildSectionSearch('sec-sun-oily', all, [
+    { key:'skin', field:'skinTypes', label:'نوع البشرة', options:[
+      {value:'all',label:'الكل'},
+      {value:'oily',label:'💧 دهنية'},
+      {value:'dry',label:'🌵 جافة'},
+      {value:'sensitive',label:'🌸 حساسة'},
+      {value:'tinted',label:'🎨 Tinted'},
+    ]},
+  ]);
+  ['sec-sun-dry','sec-sun-sensitive','sec-sun-tinted','sec-sun-eye'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.innerHTML = '';
+  });
 }
 
 function renderAcne() {
-  const items = products.acne;
-  const grid = `<div class="store-cards-grid">${items.map(p => makePriceCard(p)).join('')}</div>`;
-  document.getElementById('sec-acne-all').innerHTML =
-    `<div class="prod-section-title">💊 جميع منتجات الحبوب (${items.length} منتج)</div>` + grid;
+  var items = (window.products && window.products.acne) || [];
+  buildSectionSearch('sec-acne-all', items, [
+    { key:'type', field:'types', label:'نوع المستحضر', options:[
+      {value:'all',label:'الكل'},
+      {value:'gel',label:'🌊 جل'},
+      {value:'cream',label:'🫙 كريم'},
+      {value:'serum',label:'💧 سيروم'},
+      {value:'wash',label:'🧴 غسول'},
+    ]},
+  ]);
 }
 
 function renderEye() {
@@ -4883,7 +4818,21 @@ function renderWhitening() {
 }
 
 function renderEye() {
-  document.getElementById('sec-eye-all').innerHTML = makeSection('👁️ جميع منتجات محيط العين', products.eye);
+  buildSectionSearch('sec-eye-all', window.eyeProducts || [], [
+    { key:'prob', field:'problems', label:'المشكلة', options:[
+      {value:'all',label:'الكل'},
+      {value:'dark',label:'🌑 هالات سوداء'},
+      {value:'puffiness',label:'💧 انتفاخات'},
+      {value:'wrinkles',label:'〰️ تجاعيد'},
+      {value:'dryness',label:'🌵 جفاف'},
+    ]},
+    { key:'type', field:'types', label:'النوع', options:[
+      {value:'all',label:'الكل'},
+      {value:'cream',label:'🫙 كريم'},
+      {value:'serum',label:'💧 سيروم'},
+      {value:'gel',label:'🌊 جل'},
+    ]},
+  ]);
 }
 
 function renderWrinkles() {
@@ -4892,21 +4841,40 @@ function renderWrinkles() {
 }
 
 function renderHair() {
-  document.getElementById('sec-hair-shampoo').innerHTML = makeSection('🧴 شامبوهات', products.hair_products.shampoo);
-  document.getElementById('sec-hair-ampules').innerHTML = makeSection('💉 أمبولات التساقط', products.hair_products.ampules);
-  document.getElementById('sec-hair-minoxidil').innerHTML = makeSection('💊 Minoxidil', products.hair_products.minoxidil, 'warning');
-  document.getElementById('sec-hair-vitamins').innerHTML = makeSection('🌿 فيتامينات الشعر', products.hair_products.vitamins_hair);
-  document.getElementById('sec-hair-keratin').innerHTML = makeSection('💎 الكيراتين والبروتين', products.hair_products.keratin);
+  var hp = (window.products && window.products.hair_products) || {};
+  var allHair = [].concat(hp.shampoo||[], hp.ampules||[], hp.minoxidil||[], hp.vitamins_hair||[], hp.keratin||[]);
+  buildSectionSearch('sec-hair-shampoo', allHair, [
+    { key:'cat', field:'skinTypes', label:'الفئة', options:[
+      {value:'all',label:'الكل'},
+      {value:'oily',label:'💧 شعر دهني'},
+      {value:'dry',label:'🌵 شعر جاف'},
+      {value:'loss',label:'🌿 تساقط'},
+      {value:'keratin',label:'💎 كيراتين وبروتين'},
+    ]},
+  ]);
+  ['sec-hair-ampules','sec-hair-minoxidil','sec-hair-vitamins','sec-hair-keratin'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.innerHTML = '';
+  });
 }
 
 function renderSpecial() {
-  document.getElementById('sec-sp-aftersun').innerHTML = makeSection('☀️ بعد الشمس وحروق الشمس', products.special.afterSun);
-  document.getElementById('sec-sp-cellulite').innerHTML = makeSection('🍊 السيلوليت', products.special.cellulite);
-  document.getElementById('sec-sp-stretch').innerHTML = makeSection('📏 علامات التمدد', products.special.stretchMarks, 'safe');
-  document.getElementById('sec-sp-derma').innerHTML = makeSection('🔬 الديرما رولر', products.special.dermaRoller);
-  document.getElementById('sec-sp-foot').innerHTML = makeSection('👣 العناية بالقدمين', products.special.footCare);
-  document.getElementById('sec-sp-lip').innerHTML = makeSection('💋 العناية بالشفاه', products.special.lipCare);
-  document.getElementById('sec-sp-lash').innerHTML = makeSection('✨ العناية بالرموش', products.special.eyeLash);
+  var sp = (window.products && window.products.special) || {};
+  var allSpecial = [].concat(sp.afterSun||[], sp.cellulite||[], sp.stretchMarks||[], sp.dermaRoller||[], sp.footCare||[], sp.lipCare||[], sp.eyeLash||[]);
+  buildSectionSearch('sec-sp-aftersun', allSpecial, [
+    { key:'cat', field:'skinTypes', label:'الفئة', options:[
+      {value:'all',label:'الكل'},
+      {value:'aftersun',label:'☀️ بعد الشمس'},
+      {value:'cellulite',label:'🍊 سيلوليت'},
+      {value:'stretch',label:'📏 تمدد'},
+      {value:'derma',label:'🔬 ديرما رولر'},
+      {value:'foot',label:'👣 قدمين'},
+      {value:'lip',label:'💋 شفاه'},
+      {value:'lash',label:'✨ رموش'},
+    ]},
+  ]);
+  ['sec-sp-cellulite','sec-sp-stretch','sec-sp-derma','sec-sp-foot','sec-sp-lip','sec-sp-lash'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.innerHTML = '';
+  });
 }
 
 // Render all on load
@@ -7717,27 +7685,17 @@ function moistCopyMsg(btn) {
 
 // ===== MASKS SECTION RENDER =====
 function renderMasks() {
-  const all = window.products ? window.products.masks : [];
-  const groups = { oily:[], dry:[], sensitive:[], normal:[] };
-  all.forEach(p => {
-    (p.skinTypes||['normal']).forEach(s => {
-      if (groups[s]) groups[s].push(p);
-    });
-  });
-  const skinNames = {
-    oily: '💧 للبشرة الدهنية والمختلطة',
-    dry: '🌵 للبشرة الجافة',
-    sensitive: '🌸 للبشرة الحساسة',
-    normal: '😊 لجميع أنواع البشرة'
-  };
-  ['oily','dry','sensitive','normal'].forEach(s => {
-    const el = document.getElementById('sec-masks-' + s);
-    if (!el) return;
-    const sorted = [...groups[s]].sort((a,b) => a.price - b.price);
-    el.innerHTML = sorted.length
-      ? '<div class="prod-section-title">' + skinNames[s] + ' (' + sorted.length + ' منتج)</div>' +
-        '<div class="store-cards-grid">' + sorted.map(p => makePriceCard(p)).join('') + '</div>'
-      : '';
+  buildSectionSearch('sec-masks-oily', window.products ? window.products.masks : [], [
+    { key:'skin', field:'skinTypes', label:'نوع البشرة', options:[
+      {value:'all',label:'الكل'},
+      {value:'oily',label:'💧 دهنية / مختلطة'},
+      {value:'dry',label:'🌵 جافة'},
+      {value:'sensitive',label:'🌸 حساسة'},
+      {value:'normal',label:'😊 عادية / الكل'},
+    ]},
+  ]);
+  ['sec-masks-dry','sec-masks-sensitive','sec-masks-normal'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.innerHTML = '';
   });
 }
 
@@ -7889,27 +7847,17 @@ function masksCopyMsg(btn) {
 
 // ===== SCRUBS SECTION RENDER =====
 function renderScrubs() {
-  const all = window.products ? window.products.scrubs : [];
-  const groups = { oily:[], dry:[], sensitive:[], normal:[] };
-  all.forEach(p => {
-    (p.skinTypes||['normal']).forEach(s => {
-      if (groups[s]) groups[s].push(p);
-    });
-  });
-  const skinNames = {
-    oily: '💧 للبشرة الدهنية والمختلطة',
-    dry: '🌵 للبشرة الجافة والخشنة',
-    sensitive: '🌸 للبشرة الحساسة',
-    normal: '😊 لجميع أنواع البشرة'
-  };
-  ['oily','dry','sensitive','normal'].forEach(s => {
-    const el = document.getElementById('sec-scrubs-' + s);
-    if (!el) return;
-    const sorted = [...groups[s]].sort((a,b) => a.price - b.price);
-    el.innerHTML = sorted.length
-      ? '<div class="prod-section-title">' + skinNames[s] + ' (' + sorted.length + ' منتج)</div>' +
-        '<div class="store-cards-grid">' + sorted.map(p => makePriceCard(p)).join('') + '</div>'
-      : '';
+  buildSectionSearch('sec-scrubs-oily', window.products ? window.products.scrubs : [], [
+    { key:'skin', field:'skinTypes', label:'نوع البشرة', options:[
+      {value:'all',label:'الكل'},
+      {value:'oily',label:'💧 دهنية / مختلطة'},
+      {value:'dry',label:'🌵 جافة'},
+      {value:'sensitive',label:'🌸 حساسة'},
+      {value:'normal',label:'😊 عادية / الكل'},
+    ]},
+  ]);
+  ['sec-scrubs-dry','sec-scrubs-sensitive','sec-scrubs-normal'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.innerHTML = '';
   });
 }
 
@@ -8910,21 +8858,84 @@ window.antiAgingProducts = [
 // ===== RENDER ANTI-AGING SECTION =====
 function renderAntiAging() {
   var el = document.getElementById('sec-antiaging-all');
-  if (!el) return;
+  if (!el || el.dataset.loaded) return;
+  el.dataset.loaded = '1';
+
   var data = window.antiAgingProducts || [];
   if (!data.length) { el.innerHTML = '<div class="info-note">جاري التحميل...</div>'; return; }
-  var sorted = data.slice().sort(function(a,b){ return a.price - b.price; });
-  var html = '<div class="prod-section-title">✨ جميع منتجات Anti-Aging (' + sorted.length + ' منتج)</div><div class="store-cards-grid">';
-  sorted.forEach(function(p){
-    html += '<div class="store-card">';
-    html += '<div class="store-card-name">' + p.name + '</div>';
-    html += '<div class="store-card-code">كود المنتج: <span>' + p.code + '</span></div>';
-    if (p.desc) html += '<div class="store-card-desc">' + p.desc + '</div>';
-    html += '<div class="store-card-price">' + p.price.toLocaleString('ar-EG') + ' جنيه</div>';
-    html += '</div>';
+
+  // Search + Filter UI
+  el.innerHTML = ''
+    + '<div style="background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);margin-bottom:20px;border-right:4px solid var(--gold)">'
+    + '<div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 بحث في منتجات Anti-Aging</div>'
+    + '<input id="aaSearch" type="text" placeholder="ابحث باسم المنتج أو الكود..." oninput="filterAntiAging()" style="width:100%;padding:11px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:Cairo,sans-serif;font-size:0.92rem;outline:none;box-sizing:border-box;margin-bottom:12px">'
+    + '<div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-bottom:6px">المشكلة</div>'
+    + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px" id="aaFilterProb">'
+    + '<button onclick="filterAntiAging(this,\'aaFilterProb\')" class="dyes-filter-btn active" data-prob="all">الكل</button>'
+    + '<button onclick="filterAntiAging(this,\'aaFilterProb\')" class="dyes-filter-btn" data-prob="wrinkles">〰️ تجاعيد</button>'
+    + '<button onclick="filterAntiAging(this,\'aaFilterProb\')" class="dyes-filter-btn" data-prob="firmness">🏋️ ترهل وفقدان مرونة</button>'
+    + '<button onclick="filterAntiAging(this,\'aaFilterProb\')" class="dyes-filter-btn" data-prob="dryness">🌵 جفاف عميق</button>'
+    + '<button onclick="filterAntiAging(this,\'aaFilterProb\')" class="dyes-filter-btn" data-prob="spots">🟤 بقع داكنة</button>'
+    + '</div>'
+    + '<div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-bottom:6px">نوع المستحضر</div>'
+    + '<div style="display:flex;flex-wrap:wrap;gap:6px" id="aaFilterType">'
+    + '<button onclick="filterAntiAging(this,\'aaFilterType\')" class="dyes-filter-btn active" data-type="all">الكل</button>'
+    + '<button onclick="filterAntiAging(this,\'aaFilterType\')" class="dyes-filter-btn" data-type="serum">💧 سيروم</button>'
+    + '<button onclick="filterAntiAging(this,\'aaFilterType\')" class="dyes-filter-btn" data-type="cream">🫙 كريم</button>'
+    + '<button onclick="filterAntiAging(this,\'aaFilterType\')" class="dyes-filter-btn" data-type="gel">🌊 جل</button>'
+    + '</div>'
+    + '</div>'
+    + '<div id="aaResults"></div>';
+
+  // Store data globally for filter function
+  window._aaData = data;
+  filterAntiAging();
+}
+
+function filterAntiAging(btn, groupId) {
+  if (btn && groupId) {
+    document.querySelectorAll('#'+groupId+' .dyes-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  var data = window._aaData || [];
+  var q    = (document.getElementById('aaSearch') || {}).value || '';
+  q = q.trim().toLowerCase();
+
+  var probBtn = document.querySelector('#aaFilterProb .dyes-filter-btn.active');
+  var typeBtn = document.querySelector('#aaFilterType .dyes-filter-btn.active');
+  var prob = probBtn ? probBtn.dataset.prob : 'all';
+  var type = typeBtn ? typeBtn.dataset.type : 'all';
+
+  // no event handling needed here — buttons call with explicit params
+
+  var found = data.filter(function(p) {
+    if (prob !== 'all' && (!p.problems || p.problems.indexOf(prob) === -1)) return false;
+    if (type !== 'all' && (!p.types   || p.types.indexOf(type)    === -1)) return false;
+    if (q && (p.name + ' ' + (p.desc||'') + ' ' + p.code).toLowerCase().indexOf(q) === -1) return false;
+    return true;
   });
-  html += '</div>';
-  el.innerHTML = html;
+
+  found.sort(function(a,b){ return a.price - b.price; });
+
+  var res = document.getElementById('aaResults');
+  if (!res) return;
+
+  if (!found.length) {
+    res.innerHTML = '<div style="color:var(--text-muted);padding:16px;font-size:0.88rem">لا توجد نتائج</div>';
+    return;
+  }
+
+  res.innerHTML = '<div style="font-size:0.82rem;font-weight:700;color:var(--text-muted);margin-bottom:12px">'+found.length+' منتج</div>'
+    + '<div class="store-cards-grid">'
+    + found.map(function(p){
+        return '<div class="store-card">'
+          + '<div class="store-card-name">' + p.name + '</div>'
+          + '<div class="store-card-code">كود: <span>' + p.code + '</span></div>'
+          + (p.desc ? '<div class="store-card-desc">' + p.desc + '</div>' : '')
+          + '<div class="store-card-price">' + p.price.toLocaleString('ar-EG') + ' جنيه</div>'
+          + '</div>';
+      }).join('')
+    + '</div>';
 }
 
 // ===== ANTI-AGING RECOMMENDER =====
@@ -9361,48 +9372,34 @@ window.whiteningStoreProducts = [
 
 // ===== RENDER ALL WHITENING PRODUCTS =====
 function renderWhiteningStore() {
-  var el = document.getElementById('sec-white-store');
-  if (!el) return;
   var data = window.whiteningStoreProducts || [];
-  if (!data.length) { el.innerHTML = '<div class="info-note">جاري التحميل...</div>'; return; }
-  var sorted = data.slice().sort(function(a,b){
-    return parseFloat(a.price.replace(/[^0-9.]/g,'')) - parseFloat(b.price.replace(/[^0-9.]/g,''));
+  // Normalize price to number for sorting
+  var normalized = data.map(function(p) {
+    return Object.assign({}, p, { price: parseFloat(String(p.price).replace(/[^0-9.]/g,'')) || 0 });
   });
-  var html = '<div class="prod-section-title">🌸 جميع منتجات التفتيح (' + sorted.length + ' منتج)</div><div class="store-cards-grid">';
-  sorted.forEach(function(p) {
-    html += '<div class="store-card">'
-      + '<div class="store-card-name">' + p.name + '</div>'
-      + '<div class="store-card-code">كود المنتج: <span>' + p.code + '</span></div>'
-      + (p.desc ? '<div class="store-card-desc">' + p.desc + '</div>' : '')
-      + '<div class="store-card-price">' + p.price + '</div>'
-      + '</div>';
-  });
-  html += '</div>';
-  el.innerHTML = html;
+  buildSectionSearch('sec-white-store', normalized, [
+    { key:'loc', field:'locations', label:'المنطقة', options:[
+      {value:'all',label:'الكل'},
+      {value:'face',label:'🌸 وجه'},
+      {value:'sensitive_area',label:'💜 مناطق حساسة'},
+      {value:'body',label:'🧴 جسم'},
+    ]},
+    { key:'type', field:'types', label:'النوع', options:[
+      {value:'all',label:'الكل'},
+      {value:'cream',label:'🫙 كريم'},
+      {value:'serum',label:'💧 سيروم'},
+      {value:'lotion',label:'🧴 لوشن'},
+      {value:'gel',label:'🌊 جل'},
+    ]},
+  ]);
+  // Clear sensitive section — merged into main
+  var el = document.getElementById('sec-white-sensitive-skin');
+  if (el) el.innerHTML = '';
 }
 
 // ===== RENDER SENSITIVE SKIN WHITENING =====
 function renderWhiteningSensitive() {
-  var el = document.getElementById('sec-white-sensitive-skin');
-  if (!el) return;
-  var data = (window.whiteningStoreProducts || []).filter(function(p) {
-    return p.locations.indexOf('sensitive_area') >= 0;
-  });
-  if (!data.length) { el.innerHTML = '<div class="info-note">لا توجد منتجات حالياً</div>'; return; }
-  var sorted = data.slice().sort(function(a,b){
-    return parseFloat(a.price.replace(/[^0-9.]/g,'')) - parseFloat(b.price.replace(/[^0-9.]/g,''));
-  });
-  var html = '<div class="prod-section-title">🤍 منتجات التفتيح للمناطق الحساسة (' + sorted.length + ' منتج)</div><div class="store-cards-grid">';
-  sorted.forEach(function(p) {
-    html += '<div class="store-card" style="border-right:3px solid #9c5fd4">'
-      + '<div class="store-card-name">' + p.name + '</div>'
-      + '<div class="store-card-code">كود المنتج: <span>' + p.code + '</span></div>'
-      + (p.desc ? '<div class="store-card-desc">' + p.desc + '</div>' : '')
-      + '<div class="store-card-price">' + p.price + '</div>'
-      + '</div>';
-  });
-  html += '</div>';
-  el.innerHTML = html;
+  // Merged into renderWhiteningStore
 }
 
 // ===== WHITENING RECOMMENDER =====
@@ -12294,6 +12291,109 @@ function copyDyesRec(btn) {
     btn.textContent='✅ تم النسخ!'; btn.classList.add('copied');
     setTimeout(function(){ btn.textContent='📋 نسخ الترشيح للعميل'; btn.classList.remove('copied'); },2500);
   });
+}
+
+
+// ===== UNIVERSAL SECTION SEARCH =====
+function buildSectionSearch(containerId, data, filterConfig) {
+  var el = document.getElementById(containerId);
+  if (!el || el.dataset.loaded) return;
+  el.dataset.loaded = '1';
+
+  var filtersHTML = '';
+  if (filterConfig) {
+    filterConfig.forEach(function(fc) {
+      filtersHTML += '<div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-bottom:6px">' + fc.label + '</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px" id="sf-' + fc.key + '-' + containerId + '">'
+        + fc.options.map(function(o, i) {
+            return '<button onclick="applySectionFilter(\''+containerId+'\')" class="dyes-filter-btn'+(i===0?' active':'')+'" data-sf-'+fc.key+'="'+o.value+'">'+o.label+'</button>';
+          }).join('')
+        + '</div>';
+    });
+  }
+
+  el.innerHTML = '<div style="background:white;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);margin-bottom:20px;border-right:4px solid var(--gold)">'
+    + '<div style="font-size:0.88rem;font-weight:800;color:var(--dark);margin-bottom:10px">🔍 بحث</div>'
+    + '<input id="sf-search-'+containerId+'" type="text" placeholder="ابحث باسم المنتج أو الكود..." oninput="applySectionFilter(\''+containerId+'\')" style="width:100%;padding:11px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:Cairo,sans-serif;font-size:0.92rem;outline:none;box-sizing:border-box;margin-bottom:12px">'
+    + filtersHTML
+    + '</div>'
+    + '<div id="sf-results-'+containerId+'"></div>';
+
+  el.dataset.sfData = JSON.stringify(data.map(function(p){
+    return { name:p.name, code:p.code||'', price:p.price||0, desc:p.desc||'', problems:p.problems||[], types:p.types||[], skinTypes:p.skinTypes||[] };
+  }));
+  el.dataset.sfConfig = JSON.stringify(filterConfig || []);
+
+  applySectionFilter(containerId);
+}
+
+function applySectionFilter(containerId) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+
+  // Toggle active on clicked button
+  if (event && event.target && event.target.classList && event.target.classList.contains('dyes-filter-btn')) {
+    var btn = event.target;
+    var group = btn.parentElement;
+    if (group) { group.querySelectorAll('.dyes-filter-btn').forEach(function(b){ b.classList.remove('active'); }); btn.classList.add('active'); }
+  }
+
+  var data = JSON.parse(el.dataset.sfData || '[]');
+  var config = JSON.parse(el.dataset.sfConfig || '[]');
+  var searchEl = document.getElementById('sf-search-'+containerId);
+  var q = searchEl ? searchEl.value.trim().toLowerCase() : '';
+
+  var found = data.filter(function(p) {
+    if (q && (p.name+' '+(p.desc||'')+' '+p.code).toLowerCase().indexOf(q) === -1) return false;
+    for (var i = 0; i < config.length; i++) {
+      var fc = config[i];
+      var activeBtn = document.querySelector('#sf-'+fc.key+'-'+containerId+' .dyes-filter-btn.active');
+      var val = activeBtn ? activeBtn.dataset['sf'+fc.key.charAt(0).toUpperCase()+fc.key.slice(1)] || activeBtn.getAttribute('data-sf-'+fc.key) : 'all';
+      if (!val || val === 'all') continue;
+      if (fc.field === 'problems' && (!p.problems || p.problems.indexOf(val) === -1)) return false;
+      if (fc.field === 'types'    && (!p.types    || p.types.indexOf(val)    === -1)) return false;
+      if (fc.field === 'skinTypes'&& (!p.skinTypes|| p.skinTypes.indexOf(val) === -1)) return false;
+    }
+    return true;
+  });
+
+  found.sort(function(a,b){ return (a.price||0)-(b.price||0); });
+
+  var res = document.getElementById('sf-results-'+containerId);
+  if (!res) return;
+
+  if (!found.length) { res.innerHTML = '<div style="color:var(--text-muted);padding:16px;font-size:0.88rem">لا توجد نتائج</div>'; return; }
+
+  res.innerHTML = '<div style="font-size:0.82rem;font-weight:700;color:var(--text-muted);margin-bottom:12px">'+found.length+' منتج</div>'
+    + '<div class="store-cards-grid">'
+    + found.map(function(p){
+        return '<div class="store-card">'
+          + '<div class="store-card-name">'+p.name+'</div>'
+          + '<div class="store-card-code">كود: <span>'+p.code+'</span></div>'
+          + (p.desc ? '<div class="store-card-desc">'+p.desc+'</div>' : '')
+          + (p.price ? '<div class="store-card-price">'+Number(p.price).toLocaleString('ar-EG')+' جنيه</div>' : '')
+          + '</div>';
+      }).join('')
+    + '</div>';
+}
+
+
+// ===== CLEANSERS SEARCH =====
+function searchCleansers() {
+  var q = (document.getElementById('cleanserSearch') || {}).value || '';
+  q = q.trim().toLowerCase();
+  var res = document.getElementById('cleanserSearchResult');
+  if (!res) return;
+  if (!q) { res.innerHTML = ''; return; }
+  var d = window._cleanserData;
+  if (!d) return;
+  var all = [].concat(d.byType.gels||[], d.byType.micellar||[], d.byType.soaps||[], d.byType.offers||[]);
+  var found = all.filter(function(p){
+    return (p.name+' '+(p.desc||'')+' '+(p.code||'')).toLowerCase().indexOf(q) !== -1;
+  });
+  if (!found.length) { res.innerHTML = '<div style="color:var(--text-muted);padding:12px;font-size:0.88rem">لا توجد نتائج</div>'; return; }
+  res.innerHTML = '<div style="font-size:0.82rem;font-weight:700;color:var(--text-muted);margin-bottom:10px">'+found.length+' نتيجة</div>'
+    + '<div class="store-cards-grid">' + found.map(function(p){ return makePriceCard(p); }).join('') + '</div>';
 }
 
 
